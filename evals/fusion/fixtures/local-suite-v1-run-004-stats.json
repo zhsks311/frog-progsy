@@ -1,0 +1,102 @@
+{
+  "suiteVersion": "local-suite-v1",
+  "suiteSha256": "483072338daa9eb86f1ed40b25009567b1bf0f1690177cd645e50b2dbd2fcbb0",
+  "rubricsSha256": "3ad511a504e93f0e7e4855dd4a7ade49cc8de5f28f04220895c3623b9856d358",
+  "gradersSha256": "2bb640c921570e236ac9d8375eb619ea4ec827795a2ec16e417633f404488882",
+  "configSha256": "ac0bceb011fd2af3130a9bff7a431f2b10351733d130515ada3925ab7ba14e92",
+  "runId": "run-004-r1-after-data-plane",
+  "baselineSelected": "baseline-gpt55",
+  "primaryCandidate": "r1-dispatch-mixed",
+  "primaryMetric": "weightedQuality",
+  "weightedQualityFormula": "0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol",
+  "qualityDelta": -0.25984848484848494,
+  "qualityDeltaCi95": [
+    -0.3416666666666666,
+    -0.17803030303030298
+  ],
+  "passesPrimaryGate": false,
+  "secondaryComparisons": [],
+  "categoryBreakdown": {
+    "coding": {
+      "weight": 0.3,
+      "baselineMean": 0.5,
+      "primaryMean": 0.4166666666666667,
+      "delta": -0.08333333333333333,
+      "n": 18
+    },
+    "reasoning": {
+      "weight": 0.4,
+      "baselineMean": 0.625,
+      "primaryMean": 0.08333333333333333,
+      "delta": -0.5416666666666666,
+      "n": 24
+    },
+    "analysis": {
+      "weight": 0.2,
+      "baselineMean": 0.5,
+      "primaryMean": 0.4166666666666667,
+      "delta": -0.08333333333333333,
+      "n": 12
+    },
+    "agent_protocol": {
+      "weight": 0.1,
+      "baselineMean": 0.789044289044289,
+      "primaryMean": 0.7738927738927739,
+      "delta": -0.015151515151515147,
+      "n": 6
+    }
+  },
+  "tagSubsets": {},
+  "proxyContract": {
+    "passed": false,
+    "score": 0.9000000000000002,
+    "checks": {
+      "noResponseErrors": true
+    },
+    "regressions": []
+  },
+  "cost": {
+    "answerCalls": 120,
+    "gradingCalls": 58,
+    "adjudicationCalls": 2,
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log",
+    "retries": 0,
+    "promptTokens": 7345,
+    "promptTokensMissing": 0,
+    "completionTokens": 70303,
+    "estimatedUsd": 0
+  },
+  "latency": {
+    "wallClockMs": {
+      "p50": 11526,
+      "p95": 31384
+    },
+    "panelStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "judgeStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "finalStreamMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "searchMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "gradingMs": {
+      "p50": 7788,
+      "p95": 13817
+    }
+  },
+  "configCanonicalization": {
+    "preStartSha256": "ac0bceb011fd2af3130a9bff7a431f2b10351733d130515ada3925ab7ba14e92",
+    "postStartSha256": "ac0bceb011fd2af3130a9bff7a431f2b10351733d130515ada3925ab7ba14e92",
+    "postRunSha256": "ac0bceb011fd2af3130a9bff7a431f2b10351733d130515ada3925ab7ba14e92",
+    "hashStable": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Connect Models",
+  "pages": [
+    "providers",
+    "model-routing",
+    "claude-app-models",
+    "capability-fallbacks",
+    "model-mixing",
+    "claude-integration",
+    "web-dashboard",
+    "troubleshooting"
+  ]
+}

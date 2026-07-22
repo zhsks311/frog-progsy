@@ -1,0 +1,13 @@
+{
+  "title": "连接模型",
+  "pages": [
+    "providers",
+    "model-routing",
+    "claude-app-models",
+    "capability-fallbacks",
+    "model-mixing",
+    "claude-integration",
+    "web-dashboard",
+    "troubleshooting"
+  ]
+}

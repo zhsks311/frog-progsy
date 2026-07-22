@@ -1,0 +1,136 @@
+{
+  "suiteVersion": "local-suite-v2",
+  "suiteSha256": "6fd25badf2f5608c82f36dc6e44d31e393b8b39cb8517e1e0f6cc3c98b60621c",
+  "rubricsSha256": "289753ff0a0ef237e1decf53a18e5a21a824a9315204c97ce222afdc0543e88b",
+  "gradersSha256": "c2a9886c457ee74613907483a9bc7153282d1ea8b9d084f801a32fd06659d116",
+  "configSha256": "03a8662fa53ca5efcd4cc294bc6a732cd8973ee679815a0546369252ca4bef0c",
+  "runId": "run-006-r1-acceptance-final",
+  "baselineSelected": "baseline-gpt55",
+  "primaryCandidate": "r1-dispatch-mixed",
+  "primaryMetric": "weightedQuality",
+  "weightedQualityFormula": "0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol",
+  "qualityDelta": -0.09166666666666667,
+  "qualityDeltaCi95": [
+    -0.16388888888888886,
+    -0.025000000000000022
+  ],
+  "passesPrimaryGate": false,
+  "secondaryComparisons": [],
+  "categoryBreakdown": {
+    "coding": {
+      "weight": 0.3,
+      "baselineMean": 0.6277777777777778,
+      "primaryMean": 0.6555555555555556,
+      "delta": 0.027777777777777776,
+      "n": 18
+    },
+    "reasoning": {
+      "weight": 0.4,
+      "baselineMean": 0.8333333333333334,
+      "primaryMean": 0.5833333333333334,
+      "delta": -0.25,
+      "n": 24
+    },
+    "analysis": {
+      "weight": 0.2,
+      "baselineMean": 0.5,
+      "primaryMean": 0.5,
+      "delta": 0,
+      "n": 12
+    },
+    "agent_protocol": {
+      "weight": 0.1,
+      "baselineMean": 0.9722222222222222,
+      "primaryMean": 0.9722222222222222,
+      "delta": 0,
+      "n": 6
+    }
+  },
+  "tagSubsets": {
+    "hard": {
+      "n": 24,
+      "baselineMean": 0.8333333333333334,
+      "primaryMean": 0.5833333333333334,
+      "delta": -0.25,
+      "ci95": [
+        -0.4166666666666668,
+        -0.08333333333333337
+      ],
+      "winRate": 0
+    },
+    "format-tolerant": {
+      "n": 16,
+      "baselineMean": 1,
+      "primaryMean": 0.625,
+      "delta": -0.375,
+      "ci95": [
+        -0.625,
+        -0.125
+      ],
+      "winRate": 0
+    },
+    "search-eligible": {
+      "n": 6,
+      "baselineMean": 0.5,
+      "primaryMean": 0.5,
+      "delta": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "winRate": 0
+    }
+  },
+  "proxyContract": {
+    "passed": false,
+    "score": 0.9000000000000002,
+    "checks": {
+      "noResponseErrors": true
+    },
+    "regressions": []
+  },
+  "cost": {
+    "answerCalls": 120,
+    "gradingCalls": 30,
+    "adjudicationCalls": 2,
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log",
+    "retries": 30,
+    "promptTokens": 8918,
+    "promptTokensMissing": 0,
+    "completionTokens": 126217,
+    "estimatedUsd": 0
+  },
+  "latency": {
+    "wallClockMs": {
+      "p50": 11318,
+      "p95": 93473
+    },
+    "panelStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "judgeStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "finalStreamMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "searchMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "gradingMs": {
+      "p50": 479,
+      "p95": 829
+    }
+  },
+  "configCanonicalization": {
+    "preStartSha256": "03a8662fa53ca5efcd4cc294bc6a732cd8973ee679815a0546369252ca4bef0c",
+    "postStartSha256": "03a8662fa53ca5efcd4cc294bc6a732cd8973ee679815a0546369252ca4bef0c",
+    "postRunSha256": "03a8662fa53ca5efcd4cc294bc6a732cd8973ee679815a0546369252ca4bef0c",
+    "hashStable": true
+  }
+}

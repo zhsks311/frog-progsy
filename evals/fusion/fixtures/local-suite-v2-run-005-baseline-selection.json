@@ -1,0 +1,17 @@
+{
+  "suiteVersion": "local-suite-v2",
+  "baselineRunId": "run-005-corrected-baselines-formal",
+  "selectedBaseline": "baseline-gpt55",
+  "metric": "weighted mean qualityScore (stats.ts weightedQuality formula over paired rows)",
+  "weightedQualityByProfile": {
+    "baseline-gpt55": 0.7222222222222222,
+    "baseline-opus48": 0.46611111111111114
+  },
+  "tieBand": 0.005,
+  "tieBreakApplied": false,
+  "disqualifiedProfiles": [],
+  "statsSha256": "4f1a1a9e7cdbbce5d622cc9962fec210848bb67bd644eed46ef9cc47b0adb85e",
+  "responsesSha256": "75ec55b6d21c750369f40c92adb31817577d7d747a02227a351ea67dcc24f808",
+  "gradesSha256": "d48bf2991e5b4876644279a584463b2824df38164ec73d8b9124e480aef6e25a",
+  "createdAt": "2026-07-06T19:53:35.173Z"
+}

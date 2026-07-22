@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "brand": "FrogProgsy",
+  "command": "frogp",
+  "source": {
+    "mascot": "assets/source/mascot.png",
+    "wordmark": "assets/source/wordmark.png",
+    "wordmarkLight": "assets/source/wordmark-light.png",
+    "wordmarkDark": "assets/source/wordmark-dark.png",
+    "mark": "assets/source/frogprogsy-mark.svg",
+    "notes": "Final brand artwork is the transparent pixel-art frog: mascot.png (icon, no text) and wordmark*.png (frog + FrogProgsy text). Masters are 1024px RGBA PNGs. Icon/favicon/logo outputs derive from mascot.png; og/banner derive from the wordmark on the pond palette. wordmark-light.png uses dark text for light backgrounds; wordmark.png/wordmark-dark.png use mint text for dark backgrounds. frogprogsy-mark.svg is the retired neutral placeholder."
+  },
+  "palette": {
+    "ink": "#07110d",
+    "night": "#0b1220",
+    "pond": "#102318",
+    "frog": "#34d399",
+    "lime": "#b8ff8a",
+    "mist": "#d9fff0",
+    "accent": "#7c3aed"
+  },
+  "outputs": [
+    { "path": "assets/banner.png", "width": 1600, "height": 900, "purpose": "README hero banner" },
+    { "path": "assets/banner-alt.png", "width": 1600, "height": 900, "purpose": "alternate README/social hero" },
+    { "path": "assets/architecture.png", "width": 1600, "height": 900, "purpose": "README architecture diagram" },
+    { "path": "assets/dashboard.png", "width": 1200, "height": 760, "purpose": "README dashboard placeholder" },
+    { "path": "assets/claude-app-picker.png", "width": 1000, "height": 700, "purpose": "README Claude picker placeholder" },
+    { "path": "assets/feature-routing.png", "width": 1200, "height": 760, "purpose": "routing feature placeholder" },
+    { "path": "assets/logo-light.png", "width": 512, "height": 512, "purpose": "light logo" },
+    { "path": "assets/logo-dark.png", "width": 512, "height": 512, "purpose": "dark logo" },
+    { "path": "docs-site/src/assets/hero.png", "width": 1600, "height": 900, "purpose": "docs splash hero" },
+    { "path": "docs-site/src/assets/dashboard.png", "width": 1200, "height": 760, "purpose": "docs dashboard placeholder" },
+    { "path": "docs-site/src/assets/claude-app-picker.png", "width": 1000, "height": 700, "purpose": "docs picker placeholder" },
+    { "path": "docs-site/src/assets/logo-light.png", "width": 512, "height": 512, "purpose": "docs light logo" },
+    { "path": "docs-site/src/assets/logo-dark.png", "width": 512, "height": 512, "purpose": "docs dark logo" },
+    { "path": "docs-site/public/og.png", "width": 1200, "height": 630, "purpose": "Open Graph image" },
+    { "path": "docs-site/public/favicon.png", "width": 256, "height": 256, "purpose": "docs favicon" },
+    { "path": "gui/public/logo.png", "width": 512, "height": 512, "purpose": "GUI logo" },
+    { "path": "gui/public/favicon.png", "width": 128, "height": 128, "purpose": "GUI favicon" }
+  ]
+}

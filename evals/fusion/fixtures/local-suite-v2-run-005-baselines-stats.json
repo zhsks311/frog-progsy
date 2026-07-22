@@ -1,0 +1,136 @@
+{
+  "suiteVersion": "local-suite-v2",
+  "suiteSha256": "6fd25badf2f5608c82f36dc6e44d31e393b8b39cb8517e1e0f6cc3c98b60621c",
+  "rubricsSha256": "289753ff0a0ef237e1decf53a18e5a21a824a9315204c97ce222afdc0543e88b",
+  "gradersSha256": "c2a9886c457ee74613907483a9bc7153282d1ea8b9d084f801a32fd06659d116",
+  "configSha256": "5a2e2af8ee60f9791432e703fb4a7ae70c8db2699e966f11ac2a03f7b6ea292c",
+  "runId": "run-005-corrected-baselines-formal",
+  "baselineSelected": "baseline-gpt55",
+  "primaryCandidate": "baseline-opus48",
+  "primaryMetric": "weightedQuality",
+  "weightedQualityFormula": "0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol",
+  "qualityDelta": -0.2561111111111111,
+  "qualityDeltaCi95": [
+    -0.35611111111111127,
+    -0.15888888888888886
+  ],
+  "passesPrimaryGate": false,
+  "secondaryComparisons": [],
+  "categoryBreakdown": {
+    "coding": {
+      "weight": 0.3,
+      "baselineMean": 0.6388888888888888,
+      "primaryMean": 0.34074074074074073,
+      "delta": -0.29814814814814816,
+      "n": 18
+    },
+    "reasoning": {
+      "weight": 0.4,
+      "baselineMean": 0.8333333333333334,
+      "primaryMean": 0.5833333333333334,
+      "delta": -0.25,
+      "n": 24
+    },
+    "analysis": {
+      "weight": 0.2,
+      "baselineMean": 0.5,
+      "primaryMean": 0.5,
+      "delta": 0,
+      "n": 12
+    },
+    "agent_protocol": {
+      "weight": 0.1,
+      "baselineMean": 0.9722222222222222,
+      "primaryMean": 0.3055555555555556,
+      "delta": -0.6666666666666666,
+      "n": 6
+    }
+  },
+  "tagSubsets": {
+    "hard": {
+      "n": 24,
+      "baselineMean": 0.8333333333333334,
+      "primaryMean": 0.5833333333333334,
+      "delta": -0.25,
+      "ci95": [
+        -0.4166666666666668,
+        -0.08333333333333337
+      ],
+      "winRate": 0
+    },
+    "format-tolerant": {
+      "n": 16,
+      "baselineMean": 1,
+      "primaryMean": 0.625,
+      "delta": -0.375,
+      "ci95": [
+        -0.625,
+        -0.125
+      ],
+      "winRate": 0
+    },
+    "search-eligible": {
+      "n": 6,
+      "baselineMean": 0.5,
+      "primaryMean": 0.5,
+      "delta": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "winRate": 0
+    }
+  },
+  "proxyContract": {
+    "passed": true,
+    "score": 1,
+    "checks": {
+      "noResponseErrors": true
+    },
+    "regressions": []
+  },
+  "cost": {
+    "answerCalls": 120,
+    "gradingCalls": 30,
+    "adjudicationCalls": 2,
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log",
+    "retries": 30,
+    "promptTokens": 11262,
+    "promptTokensMissing": 0,
+    "completionTokens": 115405,
+    "estimatedUsd": 0
+  },
+  "latency": {
+    "wallClockMs": {
+      "p50": 11716,
+      "p95": 76125
+    },
+    "panelStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "judgeStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "finalStreamMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "searchMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "gradingMs": {
+      "p50": 450,
+      "p95": 603
+    }
+  },
+  "configCanonicalization": {
+    "preStartSha256": "5a2e2af8ee60f9791432e703fb4a7ae70c8db2699e966f11ac2a03f7b6ea292c",
+    "postStartSha256": "5a2e2af8ee60f9791432e703fb4a7ae70c8db2699e966f11ac2a03f7b6ea292c",
+    "postRunSha256": "5a2e2af8ee60f9791432e703fb4a7ae70c8db2699e966f11ac2a03f7b6ea292c",
+    "hashStable": true
+  }
+}

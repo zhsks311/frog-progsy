@@ -1,0 +1,68 @@
+---
+title: 请求生命周期
+description: Claude Code 保持原样，FrogProgsy 在本地负责 AI 服务选择与请求转换。
+---
+
+FrogProgsy 是 Claude Code 与你选择的 AI 服务之间的**本地连接器**。
+它不会 patch Claude Code。Claude Code 把正常请求发到本机，FrogProgsy 按你在 dashboard 中选择的
+AI 服务整理请求，再把回答转换回 Claude Code 已经认识的形式。
+
+```txt
+Claude Code
+  │
+  │  “用这个模型处理这次请求”
+  ▼
+本机 FrogProgsy
+  │
+  ├─ 选择 AI 服务与模型
+  ├─ 按服务要求整理请求
+  ├─ 仅在需要时使用搜索/图片辅助
+  └─ 把回答流式返回给 Claude Code
+  ▲
+  │
+选中的 AI 服务
+```
+
+## 用户实际感受到的流程
+
+1. **启动 FrogProgsy。**
+   `frogp start` 会打开本地 relay，并刷新 Claude Code 可以看到的模型列表。
+
+2. **在 dashboard 中连接 AI 服务。**
+   添加 OpenAI-compatible API、Anthropic、xAI、Kimi 或本地服务器，然后选择默认服务与模型。
+
+3. **照常使用 Claude Code。**
+   `claude` 命令或 Claude Code app 会把 FrogProgsy 看成本地模型入口。
+
+4. **FrogProgsy 选择目的地。**
+   带有 `provider/model` 的模型名会直接路由；否则使用 dashboard 默认值。精确顺序见
+   [模型路由](/frog-progsy/zh-cn/guides/model-routing/)。
+
+5. **FrogProgsy 按服务要求转换请求。**
+   每个 AI 服务的请求字段、认证方式、stream event 都不同。FrogProgsy 在本地处理这些差异。
+
+6. **Claude Code 收到回答。**
+   文本、tool call、reasoning summary 与错误都会按 Claude Code 预期的形式流式返回。
+
+## 内部只做三件事
+
+FrogProgsy 的内部职责可以压缩成三件事：
+
+- **选择**：根据请求的模型名和 dashboard 设置决定目标 AI 服务/模型。
+- **转换**：在 Claude Code 请求形态与目标服务请求形态之间做适配。
+- **辅助**：仅在选中模型无法直接处理 web search 或 image understanding 时，使用配置好的辅助模型。
+
+整个流程从本机开始。请求不会被集中发送到 FrogProgsy 运行的云端入口。
+本地 config、credential、安全日志与 usage 记录只为产品行为和排障服务。
+
+## 为什么保持 Claude Code 原样？
+
+直接修改 Claude Code 内部会让每次 Claude Code 更新都变成风险点。FrogProgsy 选择只在边界处连接：
+Claude Code 继续保持熟悉的用法，FrogProgsy 吸收不同 AI 服务之间的差异。
+
+这个契约更简单：
+
+- Claude Code CLI、app、SDK 可以使用同一个本地入口。
+- 切换 AI 服务时，不需要改变 Claude Code 的使用习惯。
+- 出问题时，先检查 FrogProgsy 设置和本地 relay。
+- 更底层的事件契约见 [架构参考](/frog-progsy/zh-cn/reference/architecture/)。

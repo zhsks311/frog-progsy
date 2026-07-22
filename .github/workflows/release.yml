@@ -1,0 +1,272 @@
+name: Release
+
+# Publish frogprogsy to the package registry: triggered from the Actions tab with an explicit
+# version, dist-tag, and a dry-run-first default. Bump package.json on main BEFORE dispatching
+# (or use `bun run release <version>`, which does the bump+commit+push+dispatch for you); the
+# workflow verifies the version matches before publishing.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish — must equal package.json (e.g. 0.1.0)"
+        required: true
+        type: string
+      tag:
+        description: "Registry dist-tag"
+        required: true
+        type: choice
+        options:
+          - latest
+          - preview
+        default: latest
+      dry-run:
+        description: "Dry run (build + pack, no actual publish)"
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write # create the matching GitHub Release + version tag after npm publish
+  actions: read # verify the release commit already passed Cross-platform CI
+  id-token: write # OIDC auth for Trusted Publishing + automatic provenance attestation
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      # frogprogsy is bun-native (the prepublishOnly GUI build + typecheck run under bun).
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        with:
+          bun-version: 1.3.14
+
+      # Node + npm exist only in the real-publish lane. registry-url points npm at the public registry.
+      - name: Setup Node
+        if: ${{ inputs.dry-run != true }}
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
+
+      # Trusted Publishing (OIDC) needs npm >= 11.5.1 — the runner's bundled npm may be older.
+      - name: Use OIDC-capable npm
+        if: ${{ inputs.dry-run != true }}
+        run: npm install -g npm@11.5.1
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Verify version matches package.json
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[[:alnum:]_.]+)?$ ]] || {
+            echo "::error::Invalid release version: $RELEASE_VERSION"
+            exit 1
+          }
+          PKG=$(bun -e 'console.log((await Bun.file("package.json").json()).version)')
+          echo "package.json=$PKG  input=$RELEASE_VERSION"
+          test "$PKG" = "$RELEASE_VERSION" || {
+            echo "::error::package.json ($PKG) != requested ($RELEASE_VERSION) — bump package.json on main first";
+            exit 1;
+          }
+
+      - name: Require successful CI and package-lifecycle runs for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::Release must run from main; got ${GITHUB_REF}"
+            exit 1
+          fi
+
+          # Fail closed: BOTH Cross-platform CI and Package lifecycle must have a
+          # successful run for THIS exact GITHUB_SHA. A missing workflow run is never
+          # treated as success — an empty result aborts the release.
+          require_success() {
+            workflow="$1"
+            run_url="$(
+              gh run list \
+                --workflow "$workflow" \
+                --commit "$GITHUB_SHA" \
+                --status success \
+                --limit 10 \
+                --json conclusion,headSha,url,workflowName \
+                --jq '.[0].url // ""'
+            )"
+            if [ -z "$run_url" ]; then
+              echo "::error::No successful ${workflow} run found for ${GITHUB_SHA}. Wait for it to pass before releasing."
+              gh run list --workflow "$workflow" --commit "$GITHUB_SHA" --limit 10 || true
+              exit 1
+            fi
+            echo "${workflow} passed for ${GITHUB_SHA}: ${run_url}"
+          }
+
+          require_success ci.yml
+          require_success package-lifecycle.yml
+
+      # Tokenless publish via Trusted Publishing (OIDC) — NO NPM_TOKEN secret. npm auto-detects the
+      # OIDC environment (`id-token: write` above) and generates provenance automatically, so neither a
+      # credential nor `--provenance` is needed. npm is confined to the real-publish lane; Bun owns
+      # dependency installation, validation, packaging, and dry-run publishing.
+      # PREREQUISITE: configure the Trusted Publisher for this repo + workflow on npmjs.com — possible
+      # only AFTER the package's first version exists (do the first publish locally, see the runbook).
+      - name: Preflight release metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          set -euo pipefail
+
+          pkg_name="$(bun -e 'console.log((await Bun.file("package.json").json()).name)')"
+          release_tag="v${RELEASE_VERSION}"
+          dry_run="${DRY_RUN}"
+
+          git fetch --force --tags origin
+
+          existing_tag_sha="$(git rev-parse -q --verify "refs/tags/${release_tag}^{commit}" || true)"
+          if [ -n "$existing_tag_sha" ] && [ "$existing_tag_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::${release_tag} already points at ${existing_tag_sha}, not ${GITHUB_SHA}"
+            exit 1
+          fi
+
+          if [ -n "$existing_tag_sha" ]; then
+            if [ "$dry_run" = "true" ]; then
+              echo "::notice::${release_tag} already exists at this commit; dry-run only"
+            else
+              echo "::error::${release_tag} already exists. Refusing to publish a version with pre-existing Git metadata."
+              exit 1
+            fi
+          fi
+
+          if gh release view "$release_tag" >/dev/null 2>&1; then
+            if [ "$dry_run" = "true" ]; then
+              echo "::notice::GitHub Release ${release_tag} already exists; dry-run only"
+            else
+              echo "::error::GitHub Release ${release_tag} already exists. Choose the next unused patch version."
+              exit 1
+            fi
+          fi
+
+          if bun pm view "${pkg_name}@${RELEASE_VERSION}" version >/dev/null 2>&1; then
+            if [ "$dry_run" = "true" ]; then
+              echo "::notice::${pkg_name}@${RELEASE_VERSION} already exists in the registry; dry-run only"
+            else
+              echo "::error::${pkg_name}@${RELEASE_VERSION} already exists in the registry. Choose the next unused patch version."
+              exit 1
+            fi
+          fi
+
+      - name: Publish (or dry-run)
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+          REGISTRY_DIST_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          bun run prepublishOnly
+          bun scripts/dev-package.ts build --skip-gates
+          TARBALL="$(bun scripts/dev-package.ts path)"
+          echo "verified tarball=${TARBALL}"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "::notice::DRY RUN — validating the exact Bun-built tarball, not publishing"
+            bun publish --dry-run "$TARBALL"
+          else
+            npm publish "$TARBALL" --tag "$REGISTRY_DIST_TAG" --access public
+          fi
+
+      # Confirm the registry actually has the new version (real publishes only).
+      - name: Post-publish registry smoke
+        if: ${{ inputs.dry-run != true }}
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          for attempt in $(seq 1 30); do
+            if VERSION=$(bun pm view "frogprogsy@${RELEASE_VERSION}" version 2>/dev/null); then
+              echo "registry version=$VERSION"
+              test "$VERSION" = "$RELEASE_VERSION"
+              bun pm view frogprogsy dist-tags
+              exit 0
+            fi
+            echo "::notice::frogprogsy@${RELEASE_VERSION} not visible in the registry yet (attempt $attempt/30)"
+            sleep 10
+          done
+          echo "::error::package registry smoke failed after 30 attempts"
+          bun pm view frogprogsy versions dist-tags || true
+          exit 1
+
+      - name: Create GitHub release
+        if: ${{ inputs.dry-run != true }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          REGISTRY_DIST_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+
+          release_tag="v${RELEASE_VERSION}"
+          notes_file="$(mktemp)"
+
+          git fetch --force --tags origin
+
+          existing_tag_sha="$(git rev-parse -q --verify "refs/tags/${release_tag}^{commit}" || true)"
+          if [ -n "$existing_tag_sha" ] && [ "$existing_tag_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::${release_tag} already points at ${existing_tag_sha}, not ${GITHUB_SHA}"
+            exit 1
+          fi
+
+          previous_tag="$(
+            git tag --merged HEAD --list 'v[0-9]*' --sort=-v:refname |
+              grep -vx "$release_tag" |
+              head -n 1 || true
+          )"
+
+          {
+            echo "Published to the package registry as \`frogprogsy@${RELEASE_VERSION}\` with dist-tag \`${REGISTRY_DIST_TAG}\`."
+            echo
+            echo "## Commit log"
+            echo
+            if [ -n "$previous_tag" ]; then
+              echo "Changes since \`${previous_tag}\`:"
+              echo
+              git log --reverse --no-merges --pretty=format:'- %s (%h)' "${previous_tag}..HEAD" |
+                grep -vE '^- release: v[0-9]+\.[0-9]+\.[0-9]+' || true
+              echo
+              echo
+              echo "[Full diff](https://github.com/${GITHUB_REPOSITORY}/compare/${previous_tag}...${release_tag})"
+            else
+              echo "Initial release commits:"
+              echo
+              git log --reverse --no-merges --pretty=format:'- %s (%h)' HEAD |
+                grep -vE '^- release: v[0-9]+\.[0-9]+\.[0-9]+' || true
+            fi
+          } > "$notes_file"
+
+          if ! grep -q '^- ' "$notes_file"; then
+            printf '\n- Release version bump only.\n' >> "$notes_file"
+          fi
+
+          if [ -z "$existing_tag_sha" ]; then
+            git tag "$release_tag" "$GITHUB_SHA"
+            git push origin "refs/tags/${release_tag}"
+          fi
+
+          if gh release view "$release_tag" >/dev/null 2>&1; then
+            gh release edit "$release_tag" --title "$release_tag" --notes-file "$notes_file"
+          else
+            gh release create "$release_tag" --target "$GITHUB_SHA" --title "$release_tag" --notes-file "$notes_file"
+          fi

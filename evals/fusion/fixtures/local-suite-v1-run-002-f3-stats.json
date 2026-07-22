@@ -1,0 +1,114 @@
+{
+  "suiteVersion": "local-suite-v1",
+  "suiteSha256": "483072338daa9eb86f1ed40b25009567b1bf0f1690177cd645e50b2dbd2fcbb0",
+  "rubricsSha256": "3ad511a504e93f0e7e4855dd4a7ade49cc8de5f28f04220895c3623b9856d358",
+  "gradersSha256": "0f4d7c4c75e43e52276fe068e5e92d56f7ee2aff0d75c2f3447aeb0e1e5ad3b5",
+  "configSha256": "a7b871b6839aa16b3413612ff6c31e2f6a9029f9bf7e8dbe82a9888c37bdab25",
+  "runId": "run-002-f3",
+  "baselineSelected": "baseline-gpt55",
+  "primaryCandidate": "f3-codex",
+  "primaryMetric": "weightedQuality",
+  "weightedQualityFormula": "0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol",
+  "qualityDelta": 0.13333333333333341,
+  "qualityDeltaCi95": [
+    0.05833333333333335,
+    0.20000000000000018
+  ],
+  "passesPrimaryGate": true,
+  "secondaryComparisons": [],
+  "categoryBreakdown": {
+    "coding": {
+      "weight": 0.3,
+      "baselineMean": 0.5,
+      "primaryMean": 0.6666666666666666,
+      "delta": 0.16666666666666666,
+      "n": 18
+    },
+    "reasoning": {
+      "weight": 0.4,
+      "baselineMean": 0.7083333333333334,
+      "primaryMean": 0.7291666666666666,
+      "delta": 0.020833333333333332,
+      "n": 24
+    },
+    "analysis": {
+      "weight": 0.2,
+      "baselineMean": 0.5,
+      "primaryMean": 0.875,
+      "delta": 0.375,
+      "n": 12
+    },
+    "agent_protocol": {
+      "weight": 0.1,
+      "baselineMean": 0.7738927738927739,
+      "primaryMean": 0.7738927738927739,
+      "delta": 0,
+      "n": 6
+    }
+  },
+  "tagSubsets": {
+    "hard": {
+      "n": 18,
+      "baselineMean": 0.7222222222222222,
+      "primaryMean": 0.7222222222222222,
+      "delta": 0,
+      "ci95": [
+        -0.16666666666666663,
+        0.16666666666666663
+      ],
+      "winRate": 0.05555555555555555
+    }
+  },
+  "proxyContract": {
+    "passed": true,
+    "score": 1,
+    "checks": {
+      "noResponseErrors": true
+    },
+    "regressions": []
+  },
+  "cost": {
+    "answerCalls": 120,
+    "gradingCalls": 0,
+    "adjudicationCalls": 0,
+    "searchCalls": 1,
+    "searchCallsSource": "serve-log",
+    "retries": 0,
+    "promptTokens": 148109,
+    "promptTokensMissing": 0,
+    "completionTokens": 68264,
+    "estimatedUsd": 0
+  },
+  "latency": {
+    "wallClockMs": {
+      "p50": 28766,
+      "p95": 219457
+    },
+    "panelStageMs": {
+      "p50": 11956,
+      "p95": 45601
+    },
+    "judgeStageMs": {
+      "p50": 18480,
+      "p95": 35768
+    },
+    "finalStreamMs": {
+      "p50": 76791,
+      "p95": 177442
+    },
+    "searchMs": {
+      "p50": 465,
+      "p95": 465
+    },
+    "gradingMs": {
+      "p50": 0,
+      "p95": 0
+    }
+  },
+  "configCanonicalization": {
+    "preStartSha256": "a7b871b6839aa16b3413612ff6c31e2f6a9029f9bf7e8dbe82a9888c37bdab25",
+    "postStartSha256": "a7b871b6839aa16b3413612ff6c31e2f6a9029f9bf7e8dbe82a9888c37bdab25",
+    "postRunSha256": "a7b871b6839aa16b3413612ff6c31e2f6a9029f9bf7e8dbe82a9888c37bdab25",
+    "hashStable": true
+  }
+}

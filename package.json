@@ -1,0 +1,64 @@
+{
+  "name": "frogprogsy",
+  "version": "0.0.1",
+  "packageManager": "bun@1.3.14",
+  "description": "Universal provider proxy for Claude Code — use any LLM with Claude Code CLI/SDK",
+  "type": "module",
+  "main": "src/index.ts",
+  "bin": {
+    "frogp": "./src/cli.ts",
+    "claude": "./src/claude.ts"
+  },
+  "files": [
+    "src",
+    "gui/dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "scripts": {
+    "dev": "bun run src/cli.ts start",
+    "start": "bun run src/cli.ts start",
+    "test": "bun test --isolate ./tests",
+    "typecheck": "bun x tsc --noEmit",
+    "capture:fixtures": "bun tools/capture-claude-code-fixtures.ts --write-safe-blocked",
+    "capture:fixtures:live": "bun tools/capture-claude-code-fixtures.ts --capture",
+    "generate:model-metadata": "bun scripts/generate-model-metadata.ts",
+    "sync:assets": "bun scripts/sync-brand-assets.ts",
+    "sync:assets:check": "bun scripts/sync-brand-assets.ts --check",
+    "build:gui": "cd gui && bun install --frozen-lockfile && bun run build",
+    "dev:package": "bun scripts/dev-package.ts",
+    "prepublishOnly": "bun run sync:assets:check && bun run typecheck && bun run build:gui",
+    "release": "bun scripts/release.ts",
+    "release:watch": "bun scripts/release.ts watch"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.8.0"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "openai",
+    "proxy",
+    "llm",
+    "ollama",
+    "anthropic",
+    "anthropic-messages",
+    "messages-api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zhsks311/frog-progsy.git"
+  },
+  "homepage": "https://zhsks311.github.io/frog-progsy/",
+  "bugs": {
+    "url": "https://github.com/zhsks311/frog-progsy/issues"
+  },
+  "license": "MIT"
+}

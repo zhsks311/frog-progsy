@@ -1,0 +1,1125 @@
+{
+  "runId": "run-001-baselines",
+  "suiteVersion": "local-suite-v2",
+  "responseCount": 120,
+  "logEntryCount": 120,
+  "mappingMethod": "chronological-tail",
+  "mappingWarnings": [
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-01/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-02/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-03/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-04/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-05/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-06/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-07/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-08/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-09/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-10/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-11/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-12/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-13/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-14/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-15/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-16/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-17/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-18/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-19/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-20/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-21/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-22/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-23/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-reasoning-24/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-01/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-02/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-03/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-04/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-05/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-06/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-07/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-08/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-09/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-10/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-11/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-12/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-13/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-14/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-15/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-16/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-17/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-coding-18/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-01/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-02/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-03/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-04/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-05/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-06/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-07/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-08/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-09/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-10/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-11/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-analysis-12/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-agent-01/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-agent-02/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-agent-03/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-agent-04/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-agent-05/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    },
+    {
+      "code": "routed_model_mismatch",
+      "message": "v2-agent-06/baseline-opus48: requested claude-opus-4-8 but proxy routed gpt-5.5 (silent model substitution)",
+      "severity": "warning"
+    }
+  ],
+  "truncation": {
+    "total": {
+      "rows": 120,
+      "truncated": 0,
+      "outputTokens": 123530,
+      "errors": 0
+    },
+    "byProfile": {
+      "baseline-gpt55": {
+        "rows": 60,
+        "truncated": 0,
+        "outputTokens": 61836,
+        "errors": 0
+      },
+      "baseline-opus48": {
+        "rows": 60,
+        "truncated": 0,
+        "outputTokens": 61694,
+        "errors": 0
+      }
+    },
+    "byCategory": {
+      "reasoning": {
+        "rows": 48,
+        "truncated": 0,
+        "outputTokens": 12084,
+        "errors": 0
+      },
+      "coding": {
+        "rows": 36,
+        "truncated": 0,
+        "outputTokens": 25429,
+        "errors": 0
+      },
+      "analysis": {
+        "rows": 24,
+        "truncated": 0,
+        "outputTokens": 83620,
+        "errors": 0
+      },
+      "agent_protocol": {
+        "rows": 12,
+        "truncated": 0,
+        "outputTokens": 2397,
+        "errors": 0
+      }
+    },
+    "byTaskId": {
+      "v2-reasoning-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 378,
+        "errors": 0
+      },
+      "v2-reasoning-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 104,
+        "errors": 0
+      },
+      "v2-reasoning-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 299,
+        "errors": 0
+      },
+      "v2-reasoning-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 298,
+        "errors": 0
+      },
+      "v2-reasoning-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 66,
+        "errors": 0
+      },
+      "v2-reasoning-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 753,
+        "errors": 0
+      },
+      "v2-reasoning-07": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 226,
+        "errors": 0
+      },
+      "v2-reasoning-08": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 113,
+        "errors": 0
+      },
+      "v2-reasoning-09": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 167,
+        "errors": 0
+      },
+      "v2-reasoning-10": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 102,
+        "errors": 0
+      },
+      "v2-reasoning-11": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 113,
+        "errors": 0
+      },
+      "v2-reasoning-12": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 140,
+        "errors": 0
+      },
+      "v2-reasoning-13": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 95,
+        "errors": 0
+      },
+      "v2-reasoning-14": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 247,
+        "errors": 0
+      },
+      "v2-reasoning-15": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 95,
+        "errors": 0
+      },
+      "v2-reasoning-16": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 443,
+        "errors": 0
+      },
+      "v2-reasoning-17": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1086,
+        "errors": 0
+      },
+      "v2-reasoning-18": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 865,
+        "errors": 0
+      },
+      "v2-reasoning-19": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 765,
+        "errors": 0
+      },
+      "v2-reasoning-20": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 707,
+        "errors": 0
+      },
+      "v2-reasoning-21": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 780,
+        "errors": 0
+      },
+      "v2-reasoning-22": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2001,
+        "errors": 0
+      },
+      "v2-reasoning-23": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1312,
+        "errors": 0
+      },
+      "v2-reasoning-24": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 929,
+        "errors": 0
+      },
+      "v2-coding-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 989,
+        "errors": 0
+      },
+      "v2-coding-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 609,
+        "errors": 0
+      },
+      "v2-coding-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 808,
+        "errors": 0
+      },
+      "v2-coding-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1308,
+        "errors": 0
+      },
+      "v2-coding-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1163,
+        "errors": 0
+      },
+      "v2-coding-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 546,
+        "errors": 0
+      },
+      "v2-coding-07": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1654,
+        "errors": 0
+      },
+      "v2-coding-08": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 780,
+        "errors": 0
+      },
+      "v2-coding-09": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 851,
+        "errors": 0
+      },
+      "v2-coding-10": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 714,
+        "errors": 0
+      },
+      "v2-coding-11": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2142,
+        "errors": 0
+      },
+      "v2-coding-12": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1561,
+        "errors": 0
+      },
+      "v2-coding-13": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2294,
+        "errors": 0
+      },
+      "v2-coding-14": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1422,
+        "errors": 0
+      },
+      "v2-coding-15": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2506,
+        "errors": 0
+      },
+      "v2-coding-16": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2004,
+        "errors": 0
+      },
+      "v2-coding-17": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1449,
+        "errors": 0
+      },
+      "v2-coding-18": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2629,
+        "errors": 0
+      },
+      "v2-analysis-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 8667,
+        "errors": 0
+      },
+      "v2-analysis-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 9132,
+        "errors": 0
+      },
+      "v2-analysis-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 10681,
+        "errors": 0
+      },
+      "v2-analysis-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 8821,
+        "errors": 0
+      },
+      "v2-analysis-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 14174,
+        "errors": 0
+      },
+      "v2-analysis-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 10944,
+        "errors": 0
+      },
+      "v2-analysis-07": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1279,
+        "errors": 0
+      },
+      "v2-analysis-08": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 3718,
+        "errors": 0
+      },
+      "v2-analysis-09": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 3513,
+        "errors": 0
+      },
+      "v2-analysis-10": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1676,
+        "errors": 0
+      },
+      "v2-analysis-11": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 6561,
+        "errors": 0
+      },
+      "v2-analysis-12": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 4454,
+        "errors": 0
+      },
+      "v2-agent-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 402,
+        "errors": 0
+      },
+      "v2-agent-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 582,
+        "errors": 0
+      },
+      "v2-agent-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 309,
+        "errors": 0
+      },
+      "v2-agent-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 273,
+        "errors": 0
+      },
+      "v2-agent-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 419,
+        "errors": 0
+      },
+      "v2-agent-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 412,
+        "errors": 0
+      }
+    },
+    "byRoutedModelLabel": {
+      "gpt-5.5": {
+        "rows": 120,
+        "truncated": 0,
+        "outputTokens": 123530,
+        "errors": 0
+      }
+    }
+  },
+  "routing": {
+    "byProfile": {
+      "baseline-gpt55": 60,
+      "baseline-opus48": 60
+    },
+    "byCategory": {
+      "reasoning": 48,
+      "coding": 36,
+      "analysis": 24,
+      "agent_protocol": 12
+    },
+    "byTaskId": {
+      "v2-reasoning-01": 2,
+      "v2-reasoning-02": 2,
+      "v2-reasoning-03": 2,
+      "v2-reasoning-04": 2,
+      "v2-reasoning-05": 2,
+      "v2-reasoning-06": 2,
+      "v2-reasoning-07": 2,
+      "v2-reasoning-08": 2,
+      "v2-reasoning-09": 2,
+      "v2-reasoning-10": 2,
+      "v2-reasoning-11": 2,
+      "v2-reasoning-12": 2,
+      "v2-reasoning-13": 2,
+      "v2-reasoning-14": 2,
+      "v2-reasoning-15": 2,
+      "v2-reasoning-16": 2,
+      "v2-reasoning-17": 2,
+      "v2-reasoning-18": 2,
+      "v2-reasoning-19": 2,
+      "v2-reasoning-20": 2,
+      "v2-reasoning-21": 2,
+      "v2-reasoning-22": 2,
+      "v2-reasoning-23": 2,
+      "v2-reasoning-24": 2,
+      "v2-coding-01": 2,
+      "v2-coding-02": 2,
+      "v2-coding-03": 2,
+      "v2-coding-04": 2,
+      "v2-coding-05": 2,
+      "v2-coding-06": 2,
+      "v2-coding-07": 2,
+      "v2-coding-08": 2,
+      "v2-coding-09": 2,
+      "v2-coding-10": 2,
+      "v2-coding-11": 2,
+      "v2-coding-12": 2,
+      "v2-coding-13": 2,
+      "v2-coding-14": 2,
+      "v2-coding-15": 2,
+      "v2-coding-16": 2,
+      "v2-coding-17": 2,
+      "v2-coding-18": 2,
+      "v2-analysis-01": 2,
+      "v2-analysis-02": 2,
+      "v2-analysis-03": 2,
+      "v2-analysis-04": 2,
+      "v2-analysis-05": 2,
+      "v2-analysis-06": 2,
+      "v2-analysis-07": 2,
+      "v2-analysis-08": 2,
+      "v2-analysis-09": 2,
+      "v2-analysis-10": 2,
+      "v2-analysis-11": 2,
+      "v2-analysis-12": 2,
+      "v2-agent-01": 2,
+      "v2-agent-02": 2,
+      "v2-agent-03": 2,
+      "v2-agent-04": 2,
+      "v2-agent-05": 2,
+      "v2-agent-06": 2
+    },
+    "byRequestedModelLabel": {
+      "gpt-5.5": 60,
+      "claude-opus-4-8": 60
+    },
+    "byRoutedModelLabel": {
+      "gpt-5.5": 120
+    },
+    "byProvider": {
+      "codex": 120
+    },
+    "byRouteKind": {
+      "exact-default": 60,
+      "client-default": 60
+    }
+  },
+  "sameModelSubset": {
+    "baselineModelLabel": "gpt-5.5",
+    "rows": [
+      {
+        "taskId": "v2-reasoning-01",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-02",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-03",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-04",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-05",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-06",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-07",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-08",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-09",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-10",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-11",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-12",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-13",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-14",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-15",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-16",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-17",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-18",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-19",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-20",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-21",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-22",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-23",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-reasoning-24",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-01",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-02",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-03",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-04",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-05",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-06",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-07",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-08",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-09",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-10",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-11",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-12",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-13",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-14",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-15",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-16",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-17",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-18",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-01",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-02",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-03",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-04",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-05",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-06",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-07",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-08",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-09",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-10",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-11",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-12",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-01",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-02",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-03",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-04",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-05",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-06",
+        "profile": "baseline-opus48",
+        "routedModelLabel": "gpt-5.5"
+      }
+    ]
+  },
+  "diagnostics": [],
+  "search": {
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log"
+  }
+}

@@ -1,0 +1,422 @@
+[
+  {
+    "taskId": "local-coding-01",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 17794
+  },
+  {
+    "taskId": "local-coding-02",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 13854
+  },
+  {
+    "taskId": "local-coding-03",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 37320
+  },
+  {
+    "taskId": "local-coding-04",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 17718
+  },
+  {
+    "taskId": "local-coding-05",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 9137
+  },
+  {
+    "taskId": "local-coding-06",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 18509
+  },
+  {
+    "taskId": "local-coding-07",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 8517
+  },
+  {
+    "taskId": "local-coding-08",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 6806
+  },
+  {
+    "taskId": "local-coding-09",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 10044
+  },
+  {
+    "taskId": "local-coding-10",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 10258
+  },
+  {
+    "taskId": "local-coding-11",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 24256
+  },
+  {
+    "taskId": "local-coding-12",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 13009
+  },
+  {
+    "taskId": "local-coding-13",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 23908
+  },
+  {
+    "taskId": "local-coding-14",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 19863
+  },
+  {
+    "taskId": "local-coding-15",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 16246
+  },
+  {
+    "taskId": "local-coding-16",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 7768
+  },
+  {
+    "taskId": "local-coding-17",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 15442
+  },
+  {
+    "taskId": "local-coding-18",
+    "category": "coding",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 10292
+  },
+  {
+    "taskId": "local-reasoning-01",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 6345
+  },
+  {
+    "taskId": "local-reasoning-02",
+    "category": "reasoning",
+    "hard": true,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 1943
+  },
+  {
+    "taskId": "local-reasoning-03",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 5077
+  },
+  {
+    "taskId": "local-reasoning-04",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 4838
+  },
+  {
+    "taskId": "local-reasoning-05",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 2488
+  },
+  {
+    "taskId": "local-reasoning-06",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 6674
+  },
+  {
+    "taskId": "local-reasoning-07",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 6032
+  },
+  {
+    "taskId": "local-reasoning-08",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 5244
+  },
+  {
+    "taskId": "local-reasoning-09",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 4712
+  },
+  {
+    "taskId": "local-reasoning-10",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 3026
+  },
+  {
+    "taskId": "local-reasoning-11",
+    "category": "reasoning",
+    "hard": true,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 2352
+  },
+  {
+    "taskId": "local-reasoning-12",
+    "category": "reasoning",
+    "hard": true,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 17155
+  },
+  {
+    "taskId": "local-reasoning-13",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 4609
+  },
+  {
+    "taskId": "local-reasoning-14",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 6394
+  },
+  {
+    "taskId": "local-reasoning-15",
+    "category": "reasoning",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 8096
+  },
+  {
+    "taskId": "local-reasoning-16",
+    "category": "reasoning",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 2011
+  },
+  {
+    "taskId": "local-reasoning-17",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 13095
+  },
+  {
+    "taskId": "local-reasoning-18",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 17377
+  },
+  {
+    "taskId": "local-reasoning-19",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 17666
+  },
+  {
+    "taskId": "local-reasoning-20",
+    "category": "reasoning",
+    "hard": true,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 13561
+  },
+  {
+    "taskId": "local-reasoning-21",
+    "category": "reasoning",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 19028
+  },
+  {
+    "taskId": "local-reasoning-22",
+    "category": "reasoning",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 18700
+  },
+  {
+    "taskId": "local-reasoning-23",
+    "category": "reasoning",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 19269
+  },
+  {
+    "taskId": "local-reasoning-24",
+    "category": "reasoning",
+    "hard": false,
+    "target": "anthropic/claude-opus-4-8",
+    "ms": 17146
+  },
+  {
+    "taskId": "local-analysis-01",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 12693
+  },
+  {
+    "taskId": "local-analysis-02",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 19543
+  },
+  {
+    "taskId": "local-analysis-03",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 20570
+  },
+  {
+    "taskId": "local-analysis-04",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 18948
+  },
+  {
+    "taskId": "local-analysis-05",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 10317
+  },
+  {
+    "taskId": "local-analysis-06",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 29133
+  },
+  {
+    "taskId": "local-analysis-07",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 30904
+  },
+  {
+    "taskId": "local-analysis-08",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 3536
+  },
+  {
+    "taskId": "local-analysis-09",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 13761
+  },
+  {
+    "taskId": "local-analysis-10",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 60355
+  },
+  {
+    "taskId": "local-analysis-11",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 8562
+  },
+  {
+    "taskId": "local-analysis-12",
+    "category": "analysis",
+    "hard": false,
+    "target": "codex/gpt-5.5",
+    "ms": 11178
+  },
+  {
+    "taskId": "local-agent-01",
+    "category": "agent_protocol",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 12089
+  },
+  {
+    "taskId": "local-agent-02",
+    "category": "agent_protocol",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 6559
+  },
+  {
+    "taskId": "local-agent-03",
+    "category": "agent_protocol",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 6516
+  },
+  {
+    "taskId": "local-agent-04",
+    "category": "agent_protocol",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 3493
+  },
+  {
+    "taskId": "local-agent-05",
+    "category": "agent_protocol",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 5813
+  },
+  {
+    "taskId": "local-agent-06",
+    "category": "agent_protocol",
+    "hard": false,
+    "target": "codex/gpt-5.4-mini",
+    "ms": 7048
+  }
+]

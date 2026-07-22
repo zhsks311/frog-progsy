@@ -1,0 +1,5 @@
+{
+  "name": "baseline-gpt55",
+  "description": "Single-model baseline using local codex gpt-5.5 through frogprogsy /v1/messages. targetModel is provider-qualified: bare model slugs route to the isolated home default provider (client-default) instead of erroring, which silently mislabeled runs.",
+  "targetModel": "codex/gpt-5.5"
+}

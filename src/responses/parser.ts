@@ -1,0 +1,417 @@
+import type {
+  FrogAssistantMessage,
+  FrogContentPart,
+  FrogContext,
+  FrogMessage,
+  FrogParsedRequest,
+  FrogRequestOptions,
+  FrogTextContent,
+  FrogThinkingContent,
+  FrogTool,
+  FrogToolCall,
+} from "../types";
+import { namespacedToolName } from "../types";
+import { responsesRequestSchema } from "./schema";
+import { extractHostedWebSearch } from "../web-search-fallback/synthetic-tool";
+
+function isObj(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+type InputBlock =
+  | { type: "input_text"; text: string }
+  | { type: "text"; text: string }
+  | { type: "input_image"; image_url?: string; file_id?: string; detail?: string }
+  | { type: "input_file"; file_id?: string; filename?: string };
+
+function inputContentParts(blocks: unknown[] | string | undefined): string | FrogContentPart[] {
+  if (typeof blocks === "string") return blocks;
+  if (!blocks) return [];
+  const parts: FrogContentPart[] = [];
+  for (const raw of blocks) {
+    const block = raw as InputBlock;
+    if (block.type === "input_text" || block.type === "text") {
+      parts.push({ type: "text", text: (block as { text: string }).text });
+    } else if (block.type === "input_image") {
+      const b = block as { image_url?: unknown; file_id?: string; detail?: string };
+      // image_url should be a string per the Responses API; tolerate the Chat-Completions object
+      // shape ({ url }) some clients send so routed (chat) providers still receive the image.
+      const imageUrl = typeof b.image_url === "string"
+        ? b.image_url
+        : isObj(b.image_url) && typeof (b.image_url as { url?: unknown }).url === "string"
+          ? (b.image_url as { url: string }).url
+          : undefined;
+      if (imageUrl) {
+        // Preserve the image as a structured part — adapters send it as a native image block.
+        // NEVER inline the (often base64 data-URL) image_url as text: that explodes the token count.
+        parts.push({ type: "image", imageUrl, ...(b.detail ? { detail: b.detail } : {}) });
+      } else {
+        parts.push({ type: "text", text: `[image: ${b.file_id ?? "?"}]` }); // file_id ref → no inline data
+      }
+    } else if (block.type === "input_file") {
+      const ref = (block as { file_id?: string; filename?: string }).file_id ?? (block as { filename?: string }).filename ?? "?";
+      parts.push({ type: "text", text: `[file: ${ref}]` });
+    }
+  }
+  // Collapse to a plain string only for a single TEXT part; images must stay structured.
+  if (parts.length === 1 && parts[0].type === "text") return parts[0].text;
+  return parts;
+}
+
+type OutputBlock = { type: "output_text"; text: string } | { type: "text"; text: string } | { type: "refusal"; refusal: string };
+
+function outputTextOf(blocks: unknown[] | string | undefined): FrogTextContent[] {
+  if (typeof blocks === "string") return blocks.length > 0 ? [{ type: "text", text: blocks }] : [];
+  if (!blocks) return [];
+  const out: FrogTextContent[] = [];
+  for (const raw of blocks) {
+    const b = raw as OutputBlock;
+    if (b.type === "output_text" || b.type === "text") out.push({ type: "text", text: (b as { text: string }).text });
+    else if (b.type === "refusal") out.push({ type: "text", text: `[refusal: ${(b as { refusal: string }).refusal}]` });
+  }
+  return out;
+}
+
+function mapToolChoice(value: unknown): FrogRequestOptions["toolChoice"] {
+  if (value === undefined || value === null) return undefined;
+  if (value === "auto" || value === "none" || value === "required") return value;
+  if (isObj(value) && "type" in value) {
+    const t = (value as { type: string }).type;
+    if ((t === "function" || t === "custom") && "name" in value) {
+      return { name: (value as { name: string }).name };
+    }
+    return "auto";
+  }
+  return undefined;
+}
+
+function buildTools(tools: unknown[] | undefined): FrogTool[] | undefined {
+  if (!tools) return undefined;
+  const out: FrogTool[] = [];
+  const pushFn = (t: Record<string, unknown>, namespace?: string) => {
+    const tool: FrogTool = {
+      name: t.name as string,
+      description: (t.description as string) ?? "",
+      parameters: (t.parameters ?? {}) as Record<string, unknown>,
+    };
+    if (t.strict !== undefined) tool.strict = t.strict as boolean;
+    if (namespace) tool.namespace = namespace;
+    out.push(tool);
+  };
+  for (const t of tools) {
+    if (!isObj(t)) continue;
+    if (t.type === "function" && typeof t.name === "string") {
+      pushFn(t);
+    } else if (t.type === "namespace" && Array.isArray(t.tools)) {
+      // MCP tools arrive grouped under a namespace tool; flatten the inner function tools so
+      // chat-completions models receive them (round-trip restores the namespace in the bridge).
+      const ns = typeof t.name === "string" ? t.name : undefined;
+      for (const inner of t.tools as unknown[]) {
+        if (isObj(inner) && inner.type === "function" && typeof inner.name === "string") pushFn(inner, ns);
+      }
+    }
+    else if (t.type === "custom" && typeof t.name === "string") {
+      // Freeform custom tool (e.g. apply_patch). Chat models can't emit a lark grammar, so expose a
+      // function with a single string `input` carrying the raw tool body; the bridge relays the model's
+      // call back as a custom_tool_call (Claude Code's freeform handler rejects a function_call → fatal abort).
+      out.push({
+        name: t.name,
+        description: (t.description as string) ?? "",
+        parameters: { type: "object", properties: { input: { type: "string", description: "Raw tool input (verbatim body, e.g. the apply_patch envelope)." } }, required: ["input"] },
+        freeform: true,
+      });
+    }
+    else if (t.type === "tool_search") {
+      // Client-executed tool discovery — the gateway to deferred tools (subagents, extra MCP tools).
+      // Expose as a function so chat models can call it; the bridge relays it as a tool_search_call.
+      out.push({
+        name: "tool_search",
+        description: (t.description as string) ?? "Search for additional tools to load for the next turn.",
+        parameters: (isObj(t.parameters) ? t.parameters : {
+          type: "object",
+          properties: {
+            query: { type: "string", description: "Search query for tools to load." },
+            limit: { type: "number", description: "Maximum number of tools to return." },
+          },
+          required: ["query"],
+        }) as Record<string, unknown>,
+        toolSearch: true,
+      });
+    }
+    else if (typeof t.name === "string" && t.type !== "web_search" && t.type !== "image_generation") {
+      // Any OTHER named tool (e.g. a native/computer-use tool type frogprogsy doesn't explicitly
+      // model) is client-executed — pass it through as a function so the routed model can read and
+      // call it naturally; the bridge relays its call as a function_call. Previously such tools were
+      // silently dropped, so the model never saw them.
+      pushFn(t);
+    }
+    // Only the OpenAI-hosted server-side tools (web_search, image_generation) are intentionally
+    // dropped — they're executed by OpenAI and can't be relayed to a routed chat model.
+  }
+  return out.length > 0 ? out : undefined;
+}
+
+function ensureAssistantPlaceholder(messages: FrogMessage[], modelId: string, now: number): FrogAssistantMessage {
+  const last = messages[messages.length - 1];
+  if (last && last.role === "assistant") return last;
+  const placeholder: FrogAssistantMessage = { role: "assistant", content: [], model: modelId, timestamp: now };
+  messages.push(placeholder);
+  return placeholder;
+}
+
+/**
+ * Tool-call output content. Preserves images (e.g. Claude Code `view_image` returns
+ * `input_image` items): returns content parts when any image is present, else a plain joined string.
+ * Never inlines an image_url as text (that would explode the token count).
+ */
+function outputToToolResultContent(output: string | unknown[] | undefined): string | FrogContentPart[] {
+  if (typeof output === "string") return output;
+  if (!Array.isArray(output)) return "";
+  const parts: FrogContentPart[] = [];
+  let hasImage = false;
+  for (const raw of output) {
+    if (!isObj(raw)) continue;
+    if (raw.type === "output_text" || raw.type === "text") {
+      if (typeof raw.text === "string") parts.push({ type: "text", text: raw.text });
+    } else if (raw.type === "refusal" && typeof raw.refusal === "string") {
+      parts.push({ type: "text", text: `[refusal: ${raw.refusal}]` });
+    } else if (raw.type === "input_image" && typeof raw.image_url === "string") {
+      parts.push({ type: "image", imageUrl: raw.image_url, ...(typeof raw.detail === "string" ? { detail: raw.detail } : {}) });
+      hasImage = true;
+    }
+  }
+  if (!hasImage) return parts.map(p => (p.type === "text" ? p.text : "")).join("");
+  return parts;
+}
+
+function findToolById(messages: FrogMessage[], callId: string): { name: string; namespace?: string } {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
+    if (m.role !== "assistant") continue;
+    for (const part of m.content) {
+      if (part.type === "toolCall" && part.id === callId) return { name: part.name, namespace: part.namespace };
+    }
+  }
+  return { name: "" };
+}
+
+const REASONING_EFFORTS = new Set(["none", "minimal", "low", "medium", "high", "xhigh", "max"]);
+
+export function parseRequest(body: unknown): FrogParsedRequest {
+  const parsed = responsesRequestSchema.safeParse(body);
+  if (!parsed.success) {
+    throw new Error(`responses parse error: ${parsed.error.message}`);
+  }
+  const data = parsed.data;
+  const now = Date.now();
+  const messages: FrogMessage[] = [];
+  const systemPrompt: string[] = [];
+  // Tool specs surfaced by a prior tool_search (deferred tools, e.g. subagents). Claude Code does not
+  // re-list these in `tools`, but chat models can only call listed tools — so we re-inject them.
+  const loadedToolSpecs: unknown[] = [];
+
+  if (typeof data.instructions === "string" && data.instructions.length > 0) {
+    systemPrompt.push(data.instructions);
+  }
+
+  if (typeof data.input === "string") {
+    messages.push({ role: "user", content: data.input, timestamp: now });
+  } else if (data.input) {
+    for (const item of data.input) {
+      const effectiveType = (item as { type?: string }).type ?? ("role" in item ? "message" : undefined);
+
+      if (effectiveType === "message") {
+        const msg = item as { role?: string; content?: unknown };
+        switch (msg.role) {
+          case "system": {
+            const text = inputContentParts(msg.content as unknown[] | string | undefined);
+            const flat = typeof text === "string" ? text : text.map(p => (p.type === "text" ? p.text : "")).join("");
+            if (flat.length > 0) systemPrompt.push(flat);
+            break;
+          }
+          case "user":
+          case "developer": {
+            const content = inputContentParts(msg.content as unknown[] | string | undefined);
+            messages.push({ role: msg.role, content, timestamp: now });
+            break;
+          }
+          case "assistant": {
+            const parts = outputTextOf(msg.content as unknown[] | string | undefined);
+            messages.push({ role: "assistant", content: parts, model: data.model, timestamp: now });
+            break;
+          }
+        }
+        continue;
+      }
+
+      if (effectiveType === "reasoning") {
+        const reasoning = item as { id?: string; summary?: { text: string }[]; content?: { text: string }[] };
+        const fromSummary = (reasoning.summary ?? []).map(c => c.text).join("");
+        const text = fromSummary || (reasoning.content ?? []).map(c => c.text).join("");
+        const thinking: FrogThinkingContent = {
+          type: "thinking",
+          thinking: text,
+          signature: JSON.stringify(reasoning),
+          ...(reasoning.id ? { itemId: reasoning.id } : {}),
+        };
+        ensureAssistantPlaceholder(messages, data.model, now).content.push(thinking);
+        continue;
+      }
+
+      if (effectiveType === "function_call") {
+        const call = item as { id?: string; call_id: string; name: string; arguments?: string; namespace?: string };
+        // Tolerate empty/non-JSON arguments (e.g. a no-arg tool call serialized as "") instead of
+        // throwing — a single poisoned history item would otherwise 400 every subsequent turn.
+        let args: Record<string, unknown> = {};
+        const rawArgs = call.arguments?.trim();
+        if (rawArgs) {
+          try {
+            const parsed: unknown = JSON.parse(rawArgs);
+            if (isObj(parsed)) args = parsed;
+          } catch {
+            console.warn(`[parser] function_call ${call.call_id} has non-JSON arguments; defaulting to {}`);
+          }
+        }
+        const toolCall: FrogToolCall = {
+          type: "toolCall", id: call.call_id, name: call.name, arguments: args,
+          ...(call.id ? { thoughtSignature: call.id } : {}),
+          ...(call.namespace ? { namespace: call.namespace } : {}),
+        };
+        ensureAssistantPlaceholder(messages, data.model, now).content.push(toolCall);
+        continue;
+      }
+
+      if (effectiveType === "custom_tool_call") {
+        const call = item as { id?: string; call_id: string; name: string; input: string };
+        const toolCall: FrogToolCall = {
+          type: "toolCall", id: call.call_id, name: call.name,
+          arguments: { input: call.input ?? "" },
+          customWireName: call.name,
+          ...(call.id ? { thoughtSignature: call.id } : {}),
+        };
+        ensureAssistantPlaceholder(messages, data.model, now).content.push(toolCall);
+        continue;
+      }
+
+      if (effectiveType === "tool_search_call") {
+        // Preserve the model's prior tool_search call as an assistant tool call so multi-turn
+        // history stays complete (otherwise the model re-issues tool_search forever).
+        const call = item as { id?: string; call_id?: string; arguments?: unknown };
+        const callId = call.call_id ?? call.id ?? "";
+        ensureAssistantPlaceholder(messages, data.model, now).content.push({
+          type: "toolCall", id: callId, name: "tool_search",
+          arguments: isObj(call.arguments) ? call.arguments : {},
+        });
+        continue;
+      }
+
+      if (effectiveType === "tool_search_output") {
+        // Pair the tool_search call with its result so the model sees what was loaded.
+        const out = item as { call_id?: string; tools?: unknown[] };
+        const specs = Array.isArray(out.tools) ? (out.tools as Record<string, unknown>[]) : [];
+        loadedToolSpecs.push(...specs);
+        // List the EXACT wire names the model must call (flattened for namespaced specs), matching
+        // how buildTools exposes them — otherwise the model guesses wrong names (e.g. the bare namespace).
+        const wireNames: string[] = [];
+        for (const spec of specs) {
+          if (spec.type === "namespace" && Array.isArray(spec.tools)) {
+            for (const inner of spec.tools as Record<string, unknown>[]) {
+              if (typeof inner.name === "string") wireNames.push(namespacedToolName(spec.name as string, inner.name));
+            }
+          } else if (typeof spec.name === "string") {
+            wireNames.push(spec.name);
+          }
+        }
+        messages.push({
+          role: "toolResult", toolCallId: out.call_id ?? "", toolName: "tool_search",
+          content: wireNames.length
+            ? `Tool search loaded these tools — they are now in your available tools. Call one by its EXACT name: ${wireNames.join(", ")}.`
+            : "Tool search returned no tools.",
+          isError: false, timestamp: now,
+        });
+        continue;
+      }
+
+      if (effectiveType === "function_call_output") {
+        const output = item as { call_id: string; output?: string | unknown[] };
+        const toolInfo = findToolById(messages, output.call_id);
+        messages.push({
+          role: "toolResult", toolCallId: output.call_id,
+          toolName: toolInfo.name, toolNamespace: toolInfo.namespace,
+          content: outputToToolResultContent(output.output), isError: false, timestamp: now,
+        });
+        continue;
+      }
+
+      if (effectiveType === "custom_tool_call_output") {
+        const output = item as { call_id: string; output: string };
+        const toolInfo = findToolById(messages, output.call_id);
+        messages.push({
+          role: "toolResult", toolCallId: output.call_id,
+          toolName: toolInfo.name, toolNamespace: toolInfo.namespace,
+          content: output.output ?? "", isError: false, timestamp: now,
+        });
+      }
+    }
+  }
+
+  const declaredTools = buildTools(data.tools as unknown[] | undefined) ?? [];
+  const loadedTools = buildTools(loadedToolSpecs) ?? [];
+  const seenTools = new Set<string>();
+  const mergedTools = [...declaredTools, ...loadedTools].filter(t => {
+    const k = namespacedToolName(t.namespace, t.name);
+    if (seenTools.has(k)) return false;
+    seenTools.add(k);
+    return true;
+  });
+  const context: FrogContext = {
+    ...(systemPrompt.length > 0 ? { systemPrompt } : {}),
+    messages,
+    ...(mergedTools.length > 0 ? { tools: mergedTools } : {}),
+  };
+
+  const options: FrogRequestOptions = {};
+  if (data.max_output_tokens !== undefined) options.maxOutputTokens = data.max_output_tokens;
+  if (data.temperature !== undefined) options.temperature = data.temperature;
+  if (data.top_p !== undefined) options.topP = data.top_p;
+  if (data.stop !== undefined && data.stop !== null) {
+    options.stopSequences = typeof data.stop === "string" ? [data.stop] : data.stop;
+  }
+  const tc = mapToolChoice(data.tool_choice);
+  if (tc !== undefined) options.toolChoice = tc;
+  if (data.reasoning?.effort && REASONING_EFFORTS.has(data.reasoning.effort)) {
+    options.reasoning = data.reasoning.effort;
+  }
+  const summaryMode = data.reasoning?.summary;
+  if (!summaryMode || summaryMode === "none") options.hideThinkingSummary = true;
+  if (data.presence_penalty !== undefined) options.presencePenalty = data.presence_penalty;
+  if (data.frequency_penalty !== undefined) options.frequencyPenalty = data.frequency_penalty;
+
+  // Stash the hosted web_search config (if Claude Code enabled it) so the proxy can run searches via the
+  // gpt-mini fallback for routed providers. buildTools still drops the hosted tool; the fallback path
+  // re-injects a synthetic function tool only when it will actually handle the call.
+  const webSearch = extractHostedWebSearch(data.tools as unknown[] | undefined);
+  // Detect structured-output mode (Responses `text.format`) so the web-search fallback can render its
+  // tool_result as JSON rather than prose that could corrupt the model's schema-constrained answer.
+  const structuredOutput = detectStructuredOutput(data.text);
+
+  return {
+    modelId: data.model,
+    ...(data.previous_response_id ? { previousResponseId: data.previous_response_id } : {}),
+    context,
+    stream: data.stream === true,
+    options,
+    _rawBody: body,
+    ...(webSearch ? { _webSearch: webSearch } : {}),
+    ...(structuredOutput ? { _structuredOutput: true } : {}),
+  };
+}
+
+/** True when the Responses `text.format` requests structured output (json_schema or json_object). */
+function detectStructuredOutput(text: unknown): boolean {
+  if (!isObj(text)) return false;
+  const format = (text as { format?: unknown }).format;
+  if (!isObj(format)) return false;
+  const t = (format as { type?: unknown }).type;
+  return t === "json_schema" || t === "json_object";
+}

@@ -1,0 +1,50 @@
+{
+  "name": "f0-current",
+  "description": "Current F0 fusion alias with four-member panel and default coordinator, judge, and synthesizer semantics.",
+  "targetModel": "frogp/mix",
+  "modelMixing": {
+    "enabled": true,
+    "aliasId": "frogp/mix",
+    "mode": "coordinator",
+    "combine": "fusion",
+    "agents": [
+      {
+        "provider": "codex",
+        "model": "gpt-5.5"
+      },
+      {
+        "provider": "codex",
+        "model": "gpt-5.4"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-6"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-4-8"
+      }
+    ],
+    "fusion": {
+      "panel": [
+        {
+          "provider": "codex",
+          "model": "gpt-5.5"
+        },
+        {
+          "provider": "codex",
+          "model": "gpt-5.4"
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-6"
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-4-8"
+        }
+      ]
+    },
+    "surfaceStages": true
+  }
+}

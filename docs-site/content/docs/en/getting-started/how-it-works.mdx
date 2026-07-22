@@ -1,0 +1,69 @@
+---
+title: Request Lifecycle
+description: Claude Code stays unchanged while FrogProgsy chooses and translates local AI service requests.
+---
+
+FrogProgsy is a **small local connector** between Claude Code and the AI services you choose.
+It does not patch Claude Code. Claude Code sends a normal request to your local machine,
+FrogProgsy prepares that request for the selected service, and the answer comes back in the
+shape Claude Code already understands.
+
+```txt
+Claude Code
+  │
+  │  "Handle this turn with this model"
+  ▼
+FrogProgsy on your machine
+  │
+  ├─ choose the AI service and model
+  ├─ reshape the request for that service
+  ├─ use search/image helpers only when needed
+  └─ stream the answer back to Claude Code
+  ▲
+  │
+Selected AI service
+```
+
+## What you experience
+
+1. **Start FrogProgsy.**
+   `frogp start` opens the local relay and refreshes the model list Claude Code can see.
+
+2. **Connect AI services in the dashboard.**
+   Add an OpenAI-compatible API, Anthropic, xAI, Kimi, or a local server, then choose your default service and model.
+
+3. **Use Claude Code normally.**
+   The `claude` command or Claude Code app sees FrogProgsy as a local model entry point.
+
+4. **FrogProgsy chooses the destination.**
+   A `provider/model` name routes directly. Otherwise FrogProgsy uses the dashboard default.
+   See [Model Routing](/frog-progsy/guides/model-routing/) for the exact priority order.
+
+5. **FrogProgsy translates the request.**
+   Each AI service has different request fields, authentication rules, and stream events. FrogProgsy handles those differences locally.
+
+6. **Claude Code receives the answer.**
+   Text, tool calls, reasoning summaries, and errors are streamed back in the format Claude Code expects.
+
+## What happens inside
+
+FrogProgsy keeps the internal job to three responsibilities:
+
+- **Choose** the target service/model from the requested name and dashboard settings.
+- **Translate** between Claude Code's request shape and the selected service's request shape.
+- **Assist** only when needed, such as using a configured helper model for web search or image understanding.
+
+The flow starts locally. Requests are not sent to a FrogProgsy-run cloud endpoint.
+Local config, credentials, safe logs, and usage records are kept only for product behavior and troubleshooting.
+
+## Why keep Claude Code unchanged?
+
+Changing Claude Code internals would make every Claude Code update risky. FrogProgsy instead connects at the boundary:
+Claude Code keeps its familiar workflow, and FrogProgsy absorbs the differences between AI services.
+
+That gives you a simpler contract:
+
+- Claude Code CLI, app, and SDK can use the same local entry point.
+- Switching AI services does not require changing how you use Claude Code.
+- If something breaks, you inspect FrogProgsy settings and the local relay first.
+- Low-level event contracts live in [Architecture](/frog-progsy/reference/architecture/).

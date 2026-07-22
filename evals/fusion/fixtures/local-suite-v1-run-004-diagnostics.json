@@ -1,0 +1,247 @@
+{
+  "runId": "run-004-r1-after-data-plane",
+  "suiteVersion": "local-suite-v1",
+  "responseCount": 120,
+  "logEntryCount": 23,
+  "mappingMethod": "chronological-tail",
+  "mappingWarnings": [
+    {
+      "code": "insufficient_log_entries",
+      "message": "Only 23 / 120 /v1/messages log entries are available; aggregates use mapped tail rows only",
+      "severity": "warning"
+    }
+  ],
+  "truncation": {
+    "total": {
+      "rows": 23,
+      "truncated": 16,
+      "outputTokens": 10968,
+      "errors": 0
+    },
+    "byProfile": {
+      "r1-dispatch-mixed": {
+        "rows": 23,
+        "truncated": 16,
+        "outputTokens": 10968,
+        "errors": 0
+      }
+    },
+    "byCategory": {
+      "reasoning": {
+        "rows": 22,
+        "truncated": 16,
+        "outputTokens": 10386,
+        "errors": 0
+      },
+      "analysis": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 582,
+        "errors": 0
+      }
+    },
+    "byTaskId": {
+      "local-reasoning-01": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-02": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 129,
+        "errors": 0
+      },
+      "local-reasoning-03": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 202,
+        "errors": 0
+      },
+      "local-reasoning-04": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-05": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 3,
+        "errors": 0
+      },
+      "local-reasoning-06": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-07": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-08": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-09": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-10": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 65,
+        "errors": 0
+      },
+      "local-reasoning-12": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-13": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 205,
+        "errors": 0
+      },
+      "local-reasoning-14": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 300,
+        "errors": 0
+      },
+      "local-reasoning-16": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 182,
+        "errors": 0
+      },
+      "local-reasoning-17": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-18": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-19": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-20": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-21": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-22": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-23": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-reasoning-24": {
+        "rows": 1,
+        "truncated": 1,
+        "outputTokens": 900,
+        "errors": 0
+      },
+      "local-analysis-08": {
+        "rows": 1,
+        "truncated": 0,
+        "outputTokens": 582,
+        "errors": 0
+      }
+    },
+    "byRoutedModelLabel": {
+      "claude-opus-4-8": {
+        "rows": 23,
+        "truncated": 16,
+        "outputTokens": 10968,
+        "errors": 0
+      }
+    }
+  },
+  "routing": {
+    "byProfile": {
+      "r1-dispatch-mixed": 23
+    },
+    "byCategory": {
+      "reasoning": 22,
+      "analysis": 1
+    },
+    "byTaskId": {
+      "local-reasoning-01": 1,
+      "local-reasoning-02": 1,
+      "local-reasoning-03": 1,
+      "local-reasoning-04": 1,
+      "local-reasoning-05": 1,
+      "local-reasoning-06": 1,
+      "local-reasoning-07": 1,
+      "local-reasoning-08": 1,
+      "local-reasoning-09": 1,
+      "local-reasoning-10": 1,
+      "local-reasoning-12": 1,
+      "local-reasoning-13": 1,
+      "local-reasoning-14": 1,
+      "local-reasoning-16": 1,
+      "local-reasoning-17": 1,
+      "local-reasoning-18": 1,
+      "local-reasoning-19": 1,
+      "local-reasoning-20": 1,
+      "local-reasoning-21": 1,
+      "local-reasoning-22": 1,
+      "local-reasoning-23": 1,
+      "local-reasoning-24": 1,
+      "local-analysis-08": 1
+    },
+    "byRequestedModelLabel": {
+      "frogp/mix": 23
+    },
+    "byRoutedModelLabel": {
+      "claude-opus-4-8": 23
+    },
+    "byProvider": {
+      "anthropic": 23
+    },
+    "byRouteKind": {
+      "qualified": 23
+    }
+  },
+  "sameModelSubset": {
+    "baselineModelLabel": null,
+    "rows": []
+  },
+  "diagnostics": [],
+  "search": {
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log"
+  }
+}

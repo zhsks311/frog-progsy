@@ -1,0 +1,23 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+devlog/
+.tmp/
+.gjc/
+fixtures/claude-code-gateway/*.raw.jsonl
+fixtures/claude-code-gateway/*.raw.ndjson
+fixtures/claude-code-gateway/tmp-*/
+
+# local planning, investigation, and verification output
+/.omx/
+/docs/
+/artifacts/
+/claude.md
+/agents.md
+/.claude/design.md
+/.claude-personal/
+/.claude-temp/
+/.claude-work/
+/test.pen

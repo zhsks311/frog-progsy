@@ -1,0 +1,18 @@
+services:
+  frogp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: frogprogsy:local
+    environment:
+      FROGPROGSY_HOME: /config
+      FROGP_EXTERNAL_SUPERVISOR: "1"
+      FROGP_DOCKER_BIND_HOSTNAME: 0.0.0.0
+    ports:
+      - "${FROGP_HOST_PORT:-3764}:3764"
+    volumes:
+      - frogprogsy-config:/config
+    restart: unless-stopped
+
+volumes:
+  frogprogsy-config:

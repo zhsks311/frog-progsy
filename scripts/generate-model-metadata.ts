@@ -1,0 +1,1 @@
+import "./generate-jawcode-metadata";

@@ -1,0 +1,9 @@
+{
+  "title": "Reference",
+  "pages": [
+    "cli",
+    "configuration",
+    "adapters",
+    "architecture"
+  ]
+}

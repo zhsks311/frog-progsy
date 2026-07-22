@@ -1,0 +1,102 @@
+{
+  "suiteVersion": "local-suite-v1",
+  "suiteSha256": "483072338daa9eb86f1ed40b25009567b1bf0f1690177cd645e50b2dbd2fcbb0",
+  "rubricsSha256": "3ad511a504e93f0e7e4855dd4a7ade49cc8de5f28f04220895c3623b9856d358",
+  "gradersSha256": "2bb640c921570e236ac9d8375eb619ea4ec827795a2ec16e417633f404488882",
+  "configSha256": "5afb52bcbc4d267f789783566550369a3fd360204777a68b931b74b6fdcc8312",
+  "runId": "run-003-r1-dispatch",
+  "baselineSelected": "baseline-gpt55",
+  "primaryCandidate": "r1-dispatch-mixed",
+  "primaryMetric": "weightedQuality",
+  "weightedQualityFormula": "0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol",
+  "qualityDelta": -0.19446386946386957,
+  "qualityDeltaCi95": [
+    -0.27907925407925405,
+    -0.11217948717948717
+  ],
+  "passesPrimaryGate": false,
+  "secondaryComparisons": [],
+  "categoryBreakdown": {
+    "coding": {
+      "weight": 0.3,
+      "baselineMean": 0.5,
+      "primaryMean": 0.4722222222222222,
+      "delta": -0.027777777777777776,
+      "n": 18
+    },
+    "reasoning": {
+      "weight": 0.4,
+      "baselineMean": 0.7083333333333334,
+      "primaryMean": 0.1875,
+      "delta": -0.5208333333333334,
+      "n": 24
+    },
+    "analysis": {
+      "weight": 0.2,
+      "baselineMean": 0.5,
+      "primaryMean": 0.625,
+      "delta": 0.125,
+      "n": 12
+    },
+    "agent_protocol": {
+      "weight": 0.1,
+      "baselineMean": 0.789044289044289,
+      "primaryMean": 0.7610722610722611,
+      "delta": -0.02797202797202797,
+      "n": 6
+    }
+  },
+  "tagSubsets": {},
+  "proxyContract": {
+    "passed": false,
+    "score": 0.9000000000000002,
+    "checks": {
+      "noResponseErrors": true
+    },
+    "regressions": []
+  },
+  "cost": {
+    "answerCalls": 120,
+    "gradingCalls": 58,
+    "adjudicationCalls": 2,
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log",
+    "retries": 0,
+    "promptTokens": 6940,
+    "promptTokensMissing": 0,
+    "completionTokens": 70077,
+    "estimatedUsd": 0
+  },
+  "latency": {
+    "wallClockMs": {
+      "p50": 10480,
+      "p95": 30909
+    },
+    "panelStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "judgeStageMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "finalStreamMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "searchMs": {
+      "p50": 0,
+      "p95": 0
+    },
+    "gradingMs": {
+      "p50": 7775,
+      "p95": 14929
+    }
+  },
+  "configCanonicalization": {
+    "preStartSha256": "5afb52bcbc4d267f789783566550369a3fd360204777a68b931b74b6fdcc8312",
+    "postStartSha256": "5afb52bcbc4d267f789783566550369a3fd360204777a68b931b74b6fdcc8312",
+    "postRunSha256": "5afb52bcbc4d267f789783566550369a3fd360204777a68b931b74b6fdcc8312",
+    "hashStable": true
+  }
+}

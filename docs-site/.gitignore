@@ -1,0 +1,21 @@
+# build output
+out/
+.next/
+.astro/
+
+# generated content collections
+.source/
+next-env.d.ts
+
+# dependencies
+node_modules/
+
+# logs
+*.log
+
+# environment variables
+.env
+.env.production
+
+# macOS
+.DS_Store

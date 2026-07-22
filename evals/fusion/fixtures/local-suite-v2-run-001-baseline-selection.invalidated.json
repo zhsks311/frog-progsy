@@ -1,0 +1,29 @@
+{
+  "suiteVersion": "local-suite-v2",
+  "baselineRunId": "run-001-baselines",
+  "selectedBaseline": "baseline-opus48",
+  "metric": "weighted mean qualityScore (0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol) over paired rows",
+  "weightedQualityByProfile": {
+    "baseline-gpt55": 0.730556,
+    "baseline-opus48": 0.747222
+  },
+  "tieBand": 0.005,
+  "tieBreakApplied": false,
+  "disqualifiedProfiles": [],
+  "eligibility": {
+    "baseline-gpt55": {
+      "responseErrors": 0,
+      "proxyContractPassed": true
+    },
+    "baseline-opus48": {
+      "responseErrors": 0,
+      "proxyContractPassed": true
+    }
+  },
+  "statsSha256": "7cd0119a27a1564796f184a36779658e5d75313a7bb732ecf997375adb7e6752",
+  "responsesSha256": "d19442e2af1098d951b7a38bd8ba6c88a2c8dc3eaf44f07fddf2cd3b5062415a",
+  "gradesSha256": "6deb64d6f6e3aa09e6fff5335ae19be412ba578983798c3c9a1f47c397c7ca96",
+  "createdAt": "2026-07-05T18:42:30Z",
+  "invalidatedAt": "2026-07-05T19:20:36Z",
+  "invalidationReason": "run-001's baseline-opus48 lane never reached anthropic: the profile's bare targetModel 'claude-opus-4-8' routed client-default to gpt-5.5 in the codex-default isolated home (verified via api-logs.snapshot.json: all 60 rows requested=claude-opus-4-8 routed=gpt-5.5). The comparison was gpt-5.5 vs gpt-5.5; selection void. Corrected baselines require a re-run with provider-qualified profile targets."
+}

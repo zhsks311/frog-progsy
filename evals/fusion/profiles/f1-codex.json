@@ -1,0 +1,22 @@
+{
+  "name": "f1-codex",
+  "description": "F1 candidate: full-context panel + judge (fusion.contextMode/judgeContextMode = full), strong judge/synthesizer, 60s buffered stage timeouts, codex-only panel while the anthropic lane is down.",
+  "targetModel": "frogp/mix",
+  "modelMixing": {
+    "enabled": true,
+    "combine": "fusion",
+    "agents": [
+      { "provider": "codex", "model": "gpt-5.5" },
+      { "provider": "codex", "model": "gpt-5.4" },
+      { "provider": "codex", "model": "gpt-5.4-mini" }
+    ],
+    "fusion": {
+      "judge": { "provider": "codex", "model": "gpt-5.5" },
+      "synthesizer": { "provider": "codex", "model": "gpt-5.5" },
+      "contextMode": "full",
+      "judgeContextMode": "full"
+    },
+    "stageTimeoutMs": 60000,
+    "panelTimeoutMs": 60000
+  }
+}

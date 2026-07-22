@@ -1,0 +1,56 @@
+{
+  "name": "r1-dispatch-mixed",
+  "description": "R1 diagnostic candidate: dispatch (combine=route) with a mixed anthropic+codex roster. A gpt-5.4-mini coordinator reads each task and hands it to exactly one answerer. Not an acceptance run; measures dispatch quality, distribution, latency, and cross-provider viability.",
+  "targetModel": "frogp/mix",
+  "modelMixing": {
+    "enabled": true,
+    "combine": "route",
+    "mode": "coordinator",
+    "coordinator": {
+      "provider": "codex",
+      "model": "gpt-5.4-mini"
+    },
+    "guidance": "Route hard multi-step reasoning, math, and tricky logic to anthropic/claude-opus-4-8. Route coding, code review, and structured analysis to codex/gpt-5.5. Route short factual, formatting, or protocol tasks to codex/gpt-5.4-mini. Never route reasoning, math, or multi-step logic to codex/gpt-5.4-mini; when uncertain between reasoning and a simple task, choose codex/gpt-5.5 or anthropic/claude-opus-4-8, never the mini model.",
+    "agents": [
+      {
+        "provider": "codex",
+        "model": "gpt-5.5",
+        "tasks": [
+          "coding",
+          "analysis"
+        ],
+        "difficulty": [
+          "medium",
+          "hard"
+        ],
+        "notes": "strong general coder and analyst; safe default when unsure"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-4-8",
+        "tasks": [
+          "reasoning",
+          "math"
+        ],
+        "difficulty": [
+          "hard"
+        ],
+        "notes": "deep multi-step reasoning, math, and tricky logic"
+      },
+      {
+        "provider": "codex",
+        "model": "gpt-5.4-mini",
+        "tasks": [
+          "formatting",
+          "simple-qa",
+          "protocol"
+        ],
+        "difficulty": [
+          "easy"
+        ],
+        "notes": "fast and cheap for short, simple, or mechanical tasks"
+      }
+    ],
+    "timeoutMs": 20000
+  }
+}

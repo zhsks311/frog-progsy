@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="FrogProgsy frog mark">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102318"/>
+      <stop offset="0.52" stop-color="#174b34"/>
+      <stop offset="1" stop-color="#6ee7b7"/>
+    </linearGradient>
+    <linearGradient id="frog" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b8ff8a"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <circle cx="160" cy="165" r="74" fill="url(#frog)"/>
+  <circle cx="352" cy="165" r="74" fill="url(#frog)"/>
+  <circle cx="256" cy="282" r="158" fill="url(#frog)"/>
+  <circle cx="160" cy="165" r="30" fill="#07110d"/>
+  <circle cx="352" cy="165" r="30" fill="#07110d"/>
+  <circle cx="170" cy="154" r="9" fill="#f8fafc"/>
+  <circle cx="362" cy="154" r="9" fill="#f8fafc"/>
+  <path d="M176 312c38 42 122 42 160 0" fill="none" stroke="#07110d" stroke-width="24" stroke-linecap="round"/>
+  <path d="M112 366c34 56 84 88 144 88s110-32 144-88" fill="none" stroke="#052e1f" stroke-width="18" stroke-linecap="round" opacity="0.45"/>
+</svg>

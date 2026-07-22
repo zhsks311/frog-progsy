@@ -1,0 +1,8 @@
+# Test-runner contract shared by bare `bun test`, the package `test` script, and CI:
+#   - root = ./tests  → only the tests/ directory is discovered
+#   - preload         → one isolated temp FROGPROGSY_HOME per Bun test process
+# Package and CI callers add `--isolate`, which gives each test file a fresh global object while the
+# process-level temp home remains the suite-wide fence against real ~/.frogprogsy state.
+[test]
+root = "tests"
+preload = ["./tests/preload.ts"]

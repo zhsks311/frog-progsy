@@ -1,0 +1,1588 @@
+{
+  "suiteVersion": "local-suite-v2",
+  "createdAt": "2026-07-05T17:21:35Z",
+  "frozenAt": null,
+  "taskCount": 60,
+  "categoryCounts": {
+    "reasoning": 24,
+    "coding": 18,
+    "analysis": 12,
+    "agent_protocol": 6
+  },
+  "weights": {
+    "reasoning": 0.4,
+    "coding": 0.3,
+    "analysis": 0.2,
+    "agent_protocol": 0.1
+  },
+  "answerEqualizer": {
+    "description": "Benchmark equalizer, not default Claude Code behavior: every v2 reasoning exact/numeric task carries an answerInstruction demanding only the final answer (plain integer, decimal, or simplified fraction, one line, no working, no LaTeX), serialized by the harness as a second user text content block prefixed 'Benchmark answer format instruction:'. Budgets are moderately raised (reasoning short 700, reasoning rubric 1200, coding 1200, analysis 1500, agent_protocol 900) so visible-reasoning styles are not structurally truncated.",
+    "appliedTo": "all reasoning exact/numeric tasks (answerInstructionApplied=true rows)"
+  },
+  "normalizationContract": "v2/format-tolerant exact+numeric grading canonicalizes answers before comparison: LaTeX wrapper stripping ($...$, \\(...\\), \\[...\\], nested \\boxed), \\frac/\\dfrac to a/b, exact reduced rational equivalence, tolerant numeric accepting integer/decimal/scientific/fraction with task tolerance or 1e-9, final-answer candidate selection (last boxed > last 'answer:' marker > per-'=' immediate candidates > last-line tokens) with conflicting-candidate rejection unless reference.values declares a list. Implemented in evals/fusion/src/grade.ts behind usesFormatTolerantScoring; v1 grading is byte-identical strict.",
+  "searchEligibleDefinition": "A task is search-eligible when a well-grounded answer materially benefits from current external knowledge (present-day provider APIs, protocols, or ecosystem conventions). Tagged 'search-eligible' with searchEligible=true; the harness never forces search — profiles with search enabled may use it; rubric references describe answer structure rather than volatile facts so grounded answers score well either way.",
+  "baselineSelectionRule": {
+    "candidates": [
+      "baseline-gpt55",
+      "baseline-opus48"
+    ],
+    "metric": "weighted mean qualityScore (0.30*coding + 0.40*reasoning + 0.20*analysis + 0.10*agent_protocol) over paired rows",
+    "tieBandAbsolute": 0.005,
+    "tieBreak": "baseline-gpt55 (v1 S0 continuity; minimizes provider switching)",
+    "disqualification": "response errors or proxyContract.passed=false disqualify a baseline; both disqualified blocks Phase C",
+    "recordBeforeCandidateCall": "artifacts/eval-runs/local-suite-v2/<baseline-run>/baseline-selection.json must exist and be cited before any candidate run"
+  },
+  "taskQuotas": {
+    "total": 60,
+    "verbatimV1Copies": 0,
+    "v1ConceptDerivedMin": 30,
+    "v1ConceptDerivedMax": 42,
+    "newOrSubstantivelyModifiedMin": 18,
+    "newOrSubstantivelyModifiedMax": 30,
+    "searchEligibleAnalysisMin": 6,
+    "formatTolerantCoverage": "all exact/numeric reasoning tasks",
+    "actual": {
+      "modified_from_v1_concept": 34,
+      "new_task": 22,
+      "control_from_v1_concept": 4,
+      "searchEligibleAnalysis": 6
+    }
+  },
+  "tasks": [
+    {
+      "id": "v2-reasoning-01",
+      "category": "reasoning",
+      "origin": "control_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-01"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-02",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-02"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-03",
+      "category": "reasoning",
+      "origin": "control_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-03"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-04",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-04"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-05",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-06",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-06"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-07",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-07"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-08",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-08"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "exact",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-09",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-09"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-10",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-10"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-11",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-11"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-12",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-12"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-13",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-14",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-15",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-16",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "new-structure",
+        "budget-raise",
+        "answer-equalizer"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "numeric",
+      "rubricId": null,
+      "tags": [
+        "hard",
+        "closed-form",
+        "auto",
+        "format-tolerant"
+      ],
+      "maxTokens": 700,
+      "answerInstructionApplied": true,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-17",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-17"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-17",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-18",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-17"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-18",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-19",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-17"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-19",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-20",
+      "category": "reasoning",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-reasoning-17"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Calibrates against the v1 concept family while changing the scenario, values, and surface form.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-20",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-21",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-21",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-22",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-22",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-23",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-23",
+      "tags": [
+        "hard",
+        "safety"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-reasoning-24",
+      "category": "reasoning",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adds a fresh reasoning item to broaden domain coverage and reduce overfitting to v1 patterns.",
+      "grader": "rubric",
+      "rubricId": "v2-reasoning-24",
+      "tags": [
+        "hard",
+        "proof-check"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "185-V2Reasoning",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-01",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-03"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Keeps the v1 small proxy patch-review format but moves from timer cleanup to a request-log race. The required-key schema keeps deterministic grading while changing the defect substantially.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-02",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adapts the v1 SSE parser concept to a relay backpressure failure rather than data-line aggregation. It preserves the patch-review register without copying prompt text.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-03",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Introduces a new proxy bug around case-insensitive HTTP headers. The JSON-key schema makes the expected answer shape unambiguous.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-04",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-04"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Uses v1's configuration-merge calibration but changes the concrete failure to env precedence. The task remains a minimal Bun+TypeScript patch review.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-05",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adds a new security-oriented coding item that is self-contained and deterministic. It uses the existing patch-review answer shape.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-06",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-01"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Reworks the v1 JSON parsing idea into streaming partial-parse handling rather than memoized parse caching. The facts list targets the concrete fix and test obligations.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-07",
+      "category": "coding",
+      "origin": "control_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-06"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-numbers",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Intentionally anchors close to the v1 retry-safety difficulty while changing the event sequence and wording. It calibrates whether models preserve the no-unsafe-retry invariant.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-08",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-12"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Borrows v1's time-handling calibration but changes from test hygiene to timestamp comparison semantics. The answer must name UTC or epoch comparison and a DST regression.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-09",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise",
+        "facts-robustness"
+      ],
+      "provenanceRationale": "Adds a new Unicode-normalization item for proxy model id handling. It is distinct from v1 alias and sorting tasks while preserving the JSON-only review format. Facts list rewritten to high-recall stems after architect review flagged substring-only scoring brittleness.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-10",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adds a new lock-file drift item for package reproducibility in CI. Deterministic facts emphasize frozen-install enforcement without depending on v1 wording.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "typescript",
+        "patch-constraint",
+        "auto"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-11",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-03"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-11",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-12",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-12",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-13",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-13",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-14",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-04"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-14",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-15",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-15",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-16",
+      "category": "coding",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-01",
+        "local-coding-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-16",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-17",
+      "category": "coding",
+      "origin": "control_from_v1_concept",
+      "sourceTaskIds": [
+        "local-coding-06"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-17",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-coding-18",
+      "category": "coding",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Rubric item follows the v1 diff-review style while using a v2 proxy-specific scenario. The reference is concise but covers risk, safer implementation, and regression evidence.",
+      "grader": "rubric",
+      "rubricId": "v2-coding-18",
+      "tags": [
+        "typescript",
+        "diff-review"
+      ],
+      "maxTokens": 1200,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-01",
+      "category": "analysis",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "search-eligibility"
+      ],
+      "provenanceRationale": "New current-knowledge analysis prompt requiring contemporary external examples while grading stable answer structure.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-01",
+      "tags": [
+        "architecture",
+        "safety",
+        "search-eligible"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": true,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-02",
+      "category": "analysis",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "search-eligibility"
+      ],
+      "provenanceRationale": "New current-knowledge analysis prompt requiring contemporary external examples while grading stable answer structure.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-02",
+      "tags": [
+        "architecture",
+        "safety",
+        "search-eligible"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": true,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-03",
+      "category": "analysis",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "search-eligibility"
+      ],
+      "provenanceRationale": "New current-knowledge analysis prompt requiring contemporary external examples while grading stable answer structure.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-03",
+      "tags": [
+        "architecture",
+        "safety",
+        "search-eligible"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": true,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-04",
+      "category": "analysis",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "search-eligibility"
+      ],
+      "provenanceRationale": "New current-knowledge analysis prompt requiring contemporary external examples while grading stable answer structure.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-04",
+      "tags": [
+        "architecture",
+        "safety",
+        "search-eligible"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": true,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-05",
+      "category": "analysis",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "search-eligibility"
+      ],
+      "provenanceRationale": "New current-knowledge analysis prompt requiring contemporary external examples while grading stable answer structure.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-05",
+      "tags": [
+        "architecture",
+        "safety",
+        "search-eligible"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": true,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-06",
+      "category": "analysis",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "search-eligibility"
+      ],
+      "provenanceRationale": "New current-knowledge analysis prompt requiring contemporary external examples while grading stable answer structure.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-06",
+      "tags": [
+        "architecture",
+        "safety",
+        "search-eligible"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": true,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-07",
+      "category": "analysis",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-analysis-01"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Modifies local-analysis-01 into a new self-contained architecture scenario with different structure and acceptance focus.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-07",
+      "tags": [
+        "architecture",
+        "safety"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-08",
+      "category": "analysis",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-analysis-11",
+        "local-agent-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Modifies local-analysis-11, local-agent-05 into a new self-contained architecture scenario with different structure and acceptance focus.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-08",
+      "tags": [
+        "architecture",
+        "safety"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-09",
+      "category": "analysis",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-analysis-04",
+        "local-agent-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Modifies local-analysis-04, local-agent-05 into a new self-contained architecture scenario with different structure and acceptance focus.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-09",
+      "tags": [
+        "architecture",
+        "safety"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-10",
+      "category": "analysis",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-analysis-10",
+        "local-coding-16"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Modifies local-analysis-10, local-coding-16 into a new self-contained architecture scenario with different structure and acceptance focus.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-10",
+      "tags": [
+        "architecture",
+        "safety"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-11",
+      "category": "analysis",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-analysis-03"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Modifies local-analysis-03 into a new self-contained architecture scenario with different structure and acceptance focus.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-11",
+      "tags": [
+        "architecture",
+        "safety"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-analysis-12",
+      "category": "analysis",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-agent-06",
+        "local-coding-18"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Modifies local-agent-06, local-coding-18 into a new self-contained architecture scenario with different structure and acceptance focus.",
+      "grader": "rubric",
+      "rubricId": "v2-analysis-12",
+      "tags": [
+        "architecture",
+        "safety"
+      ],
+      "maxTokens": 1500,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "187-V2Analysis",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-agent-01",
+      "category": "agent_protocol",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-agent-03"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Recasts the v1 config-isolation contract as parallel run isolation. It keeps the protocol answer shape but changes the setting and required keys.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "proxy-contract",
+        "auto"
+      ],
+      "maxTokens": 900,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-agent-02",
+      "category": "agent_protocol",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-agent-01"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Adapts v1 streaming-boundary into a stricter single-SSE-stream contract. The prompt is self-contained and avoids copying the v1 wording.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "proxy-contract",
+        "auto"
+      ],
+      "maxTokens": 900,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-agent-03",
+      "category": "agent_protocol",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-agent-01"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Uses the v1 thinking/final stream theme but focuses on diagnostic retention versus client output. The schema remains deterministic.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "proxy-contract",
+        "auto"
+      ],
+      "maxTokens": 900,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-agent-04",
+      "category": "agent_protocol",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-agent-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise"
+      ],
+      "provenanceRationale": "Moves the v1 fallback/audit idea into artifact redaction. It requires a concrete boundary and forbidden leak behavior.",
+      "grader": "schema",
+      "rubricId": null,
+      "tags": [
+        "proxy-contract",
+        "auto"
+      ],
+      "maxTokens": 900,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-agent-05",
+      "category": "agent_protocol",
+      "origin": "modified_from_v1_concept",
+      "sourceTaskIds": [
+        "local-agent-05"
+      ],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise",
+        "facts-robustness"
+      ],
+      "provenanceRationale": "Closely follows v1 fallback-contract calibration while changing the failure point to a judge timeout. Facts target visible failure semantics. Facts list rewritten to high-recall stems after architect review flagged substring-only scoring brittleness.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "proxy-contract",
+        "auto"
+      ],
+      "maxTokens": 900,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    },
+    {
+      "id": "v2-agent-06",
+      "category": "agent_protocol",
+      "origin": "new_task",
+      "sourceTaskIds": [],
+      "changeClasses": [
+        "new-scenario",
+        "new-structure",
+        "budget-raise",
+        "facts-robustness"
+      ],
+      "provenanceRationale": "Adds a new agent-protocol contract around config hash integrity. It complements v1 manifest/config concerns without duplicating a prompt. Facts list rewritten to high-recall stems after architect review flagged substring-only scoring brittleness.",
+      "grader": "facts",
+      "rubricId": null,
+      "tags": [
+        "proxy-contract",
+        "auto"
+      ],
+      "maxTokens": 900,
+      "answerInstructionApplied": false,
+      "searchEligible": false,
+      "author": "186-V2CodingAgent",
+      "reviewer": "leader"
+    }
+  ],
+  "sha256": "6fd25badf2f5608c82f36dc6e44d31e393b8b39cb8517e1e0f6cc3c98b60621c"
+}

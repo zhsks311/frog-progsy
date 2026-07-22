@@ -1,0 +1,103 @@
+import { describe, expect, test } from "bun:test";
+import { bridgeToResponsesSSE } from "../src/bridge";
+import type { AdapterEvent } from "../src/types";
+
+async function* replay(events: AdapterEvent[]): AsyncGenerator<AdapterEvent> {
+  for (const event of events) yield event;
+}
+
+// An adapter generator that yields one delta and then hangs forever without a terminal event —
+// models a slow/stalled routed provider whose stream is cancelled by the client mid-flight.
+async function* hangs(): AsyncGenerator<AdapterEvent> {
+  yield { type: "text_delta", text: "partial" };
+  await new Promise<void>(() => {}); // never resolves; the stream stays open until cancelled
+  yield { type: "done" };            // unreachable
+}
+
+async function collectEventNames(stream: ReadableStream<Uint8Array>): Promise<string[]> {
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let text = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    text += decoder.decode(value, { stream: true });
+  }
+  return text.split("\n\n")
+    .map(frame => frame.trim())
+    .filter(frame => frame.length > 0 && frame !== "data: [DONE]")
+    .map(frame => frame.split("\n").find(line => line.startsWith("event: "))?.slice(7) ?? "");
+}
+
+describe("bridge stream lifecycle (RC1 / RC2)", () => {
+  test("RC1: a stream that ends WITHOUT a done event emits response.incomplete (not completed)", async () => {
+    const names = await collectEventNames(bridgeToResponsesSSE(replay([
+      { type: "text_delta", text: "hello" },
+      // no { type: "done" } — models anthropic returning on EOF after message_stop
+    ]), "routed/model"));
+    expect(names.filter(n => n === "response.incomplete")).toHaveLength(1);
+    expect(names).toContain("response.output_text.delta");
+    expect(names).not.toContain("response.failed");
+    expect(names).not.toContain("response.completed");
+  });
+
+  test("RC1: a normal done event yields exactly one response.completed (no double terminal)", async () => {
+    const names = await collectEventNames(bridgeToResponsesSSE(replay([
+      { type: "text_delta", text: "hi" },
+      { type: "done" },
+    ]), "routed/model"));
+    expect(names.filter(n => n === "response.completed")).toHaveLength(1);
+  });
+
+  test("RC1: an error event yields response.failed and NO synthetic response.completed", async () => {
+    const names = await collectEventNames(bridgeToResponsesSSE(replay([
+      { type: "error", message: "boom" },
+    ]), "routed/model"));
+    expect(names).toContain("response.failed");
+    expect(names).not.toContain("response.completed");
+  });
+
+  test("RC2: cancel() invokes the onCancel (upstream abort) hook and does not throw", async () => {
+    let aborted = false;
+    const stream = bridgeToResponsesSSE(hangs(), "routed/model", undefined, undefined, undefined, () => { aborted = true; });
+    const reader = stream.getReader();
+    await reader.read();   // response.created (enqueued before the read loop)
+    await reader.cancel(); // client disconnects
+    expect(aborted).toBe(true);
+  });
+
+  test("RC3: emits a parser-ignored response.heartbeat during upstream silence", async () => {
+    // heartbeatMs = 10 so the keep-alive fires quickly; hangs() goes silent after one delta.
+    const stream = bridgeToResponsesSSE(hangs(), "routed/model", undefined, undefined, undefined, undefined, 10);
+    const reader = stream.getReader();
+    const dec = new TextDecoder();
+    let text = "";
+    for (let i = 0; i < 12; i++) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value) text += dec.decode(value, { stream: true });
+    }
+    await reader.cancel();
+    expect(text).toContain("response.heartbeat");
+  });
+
+  test("RC3: configurable stall timeout emits response.incomplete after deadline", async () => {
+    const stream = bridgeToResponsesSSE(
+      hangs(), "routed/model", undefined, undefined, undefined, undefined, 50,
+      { stallTimeoutSec: 1 },
+    );
+    const reader = stream.getReader();
+    const dec = new TextDecoder();
+    let text = "";
+    for (let i = 0; i < 100; i++) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value) text += dec.decode(value, { stream: true });
+      if (text.includes("response.incomplete")) break;
+    }
+    await reader.cancel();
+    expect(text).toContain("response.incomplete");
+    expect(text).toContain("upstream_stall_timeout");
+    expect(text).not.toContain("response.completed");
+  });
+});

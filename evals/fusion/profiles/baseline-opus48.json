@@ -1,0 +1,5 @@
+{
+  "name": "baseline-opus48",
+  "description": "Single-model baseline using local anthropic claude-opus-4-8 through frogprogsy /v1/messages. targetModel is provider-qualified: bare model slugs route to the isolated home default provider (client-default) instead of erroring, which silently mislabeled runs.",
+  "targetModel": "anthropic/claude-opus-4-8"
+}

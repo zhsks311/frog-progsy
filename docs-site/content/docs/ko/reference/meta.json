@@ -1,0 +1,9 @@
+{
+  "title": "자세한 설정과 구조",
+  "pages": [
+    "cli",
+    "configuration",
+    "adapters",
+    "architecture"
+  ]
+}

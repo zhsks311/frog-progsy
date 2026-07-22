@@ -1,0 +1,698 @@
+{
+  "runId": "run-006-r1-acceptance-final",
+  "suiteVersion": "local-suite-v2",
+  "responseCount": 120,
+  "logEntryCount": 120,
+  "mappingMethod": "chronological-tail",
+  "mappingWarnings": [],
+  "truncation": {
+    "total": {
+      "rows": 120,
+      "truncated": 1,
+      "outputTokens": 126217,
+      "errors": 0
+    },
+    "byProfile": {
+      "baseline-gpt55": {
+        "rows": 60,
+        "truncated": 0,
+        "outputTokens": 60837,
+        "errors": 0
+      },
+      "r1-dispatch-mixed": {
+        "rows": 60,
+        "truncated": 1,
+        "outputTokens": 65380,
+        "errors": 0
+      }
+    },
+    "byCategory": {
+      "reasoning": {
+        "rows": 48,
+        "truncated": 1,
+        "outputTokens": 13987,
+        "errors": 0
+      },
+      "coding": {
+        "rows": 36,
+        "truncated": 0,
+        "outputTokens": 23638,
+        "errors": 0
+      },
+      "analysis": {
+        "rows": 24,
+        "truncated": 0,
+        "outputTokens": 86553,
+        "errors": 0
+      },
+      "agent_protocol": {
+        "rows": 12,
+        "truncated": 0,
+        "outputTokens": 2039,
+        "errors": 0
+      }
+    },
+    "byTaskId": {
+      "v2-reasoning-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 121,
+        "errors": 0
+      },
+      "v2-reasoning-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 56,
+        "errors": 0
+      },
+      "v2-reasoning-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 402,
+        "errors": 0
+      },
+      "v2-reasoning-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 432,
+        "errors": 0
+      },
+      "v2-reasoning-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 34,
+        "errors": 0
+      },
+      "v2-reasoning-06": {
+        "rows": 2,
+        "truncated": 1,
+        "outputTokens": 1021,
+        "errors": 0
+      },
+      "v2-reasoning-07": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 269,
+        "errors": 0
+      },
+      "v2-reasoning-08": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 61,
+        "errors": 0
+      },
+      "v2-reasoning-09": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 90,
+        "errors": 0
+      },
+      "v2-reasoning-10": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 173,
+        "errors": 0
+      },
+      "v2-reasoning-11": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 73,
+        "errors": 0
+      },
+      "v2-reasoning-12": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 69,
+        "errors": 0
+      },
+      "v2-reasoning-13": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 50,
+        "errors": 0
+      },
+      "v2-reasoning-14": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 117,
+        "errors": 0
+      },
+      "v2-reasoning-15": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 49,
+        "errors": 0
+      },
+      "v2-reasoning-16": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 445,
+        "errors": 0
+      },
+      "v2-reasoning-17": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1531,
+        "errors": 0
+      },
+      "v2-reasoning-18": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1317,
+        "errors": 0
+      },
+      "v2-reasoning-19": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1209,
+        "errors": 0
+      },
+      "v2-reasoning-20": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1304,
+        "errors": 0
+      },
+      "v2-reasoning-21": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1136,
+        "errors": 0
+      },
+      "v2-reasoning-22": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1737,
+        "errors": 0
+      },
+      "v2-reasoning-23": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1134,
+        "errors": 0
+      },
+      "v2-reasoning-24": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1157,
+        "errors": 0
+      },
+      "v2-coding-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 641,
+        "errors": 0
+      },
+      "v2-coding-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 524,
+        "errors": 0
+      },
+      "v2-coding-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 867,
+        "errors": 0
+      },
+      "v2-coding-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1501,
+        "errors": 0
+      },
+      "v2-coding-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 548,
+        "errors": 0
+      },
+      "v2-coding-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 487,
+        "errors": 0
+      },
+      "v2-coding-07": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1532,
+        "errors": 0
+      },
+      "v2-coding-08": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 544,
+        "errors": 0
+      },
+      "v2-coding-09": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 890,
+        "errors": 0
+      },
+      "v2-coding-10": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 581,
+        "errors": 0
+      },
+      "v2-coding-11": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1670,
+        "errors": 0
+      },
+      "v2-coding-12": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1786,
+        "errors": 0
+      },
+      "v2-coding-13": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 3154,
+        "errors": 0
+      },
+      "v2-coding-14": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1187,
+        "errors": 0
+      },
+      "v2-coding-15": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1840,
+        "errors": 0
+      },
+      "v2-coding-16": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2052,
+        "errors": 0
+      },
+      "v2-coding-17": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1245,
+        "errors": 0
+      },
+      "v2-coding-18": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 2589,
+        "errors": 0
+      },
+      "v2-analysis-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 9158,
+        "errors": 0
+      },
+      "v2-analysis-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 7947,
+        "errors": 0
+      },
+      "v2-analysis-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 10360,
+        "errors": 0
+      },
+      "v2-analysis-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 9453,
+        "errors": 0
+      },
+      "v2-analysis-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 14555,
+        "errors": 0
+      },
+      "v2-analysis-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 11196,
+        "errors": 0
+      },
+      "v2-analysis-07": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1181,
+        "errors": 0
+      },
+      "v2-analysis-08": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 4789,
+        "errors": 0
+      },
+      "v2-analysis-09": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 3795,
+        "errors": 0
+      },
+      "v2-analysis-10": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 1272,
+        "errors": 0
+      },
+      "v2-analysis-11": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 6544,
+        "errors": 0
+      },
+      "v2-analysis-12": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 6303,
+        "errors": 0
+      },
+      "v2-agent-01": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 278,
+        "errors": 0
+      },
+      "v2-agent-02": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 330,
+        "errors": 0
+      },
+      "v2-agent-03": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 251,
+        "errors": 0
+      },
+      "v2-agent-04": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 224,
+        "errors": 0
+      },
+      "v2-agent-05": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 413,
+        "errors": 0
+      },
+      "v2-agent-06": {
+        "rows": 2,
+        "truncated": 0,
+        "outputTokens": 543,
+        "errors": 0
+      }
+    },
+    "byRoutedModelLabel": {
+      "gpt-5.5": {
+        "rows": 92,
+        "truncated": 0,
+        "outputTokens": 118046,
+        "errors": 0
+      },
+      "claude-opus-4-8": {
+        "rows": 23,
+        "truncated": 1,
+        "outputTokens": 7610,
+        "errors": 0
+      },
+      "gpt-5.4-mini": {
+        "rows": 5,
+        "truncated": 0,
+        "outputTokens": 561,
+        "errors": 0
+      }
+    }
+  },
+  "routing": {
+    "byProfile": {
+      "baseline-gpt55": 60,
+      "r1-dispatch-mixed": 60
+    },
+    "byCategory": {
+      "reasoning": 48,
+      "coding": 36,
+      "analysis": 24,
+      "agent_protocol": 12
+    },
+    "byTaskId": {
+      "v2-reasoning-01": 2,
+      "v2-reasoning-02": 2,
+      "v2-reasoning-03": 2,
+      "v2-reasoning-04": 2,
+      "v2-reasoning-05": 2,
+      "v2-reasoning-06": 2,
+      "v2-reasoning-07": 2,
+      "v2-reasoning-08": 2,
+      "v2-reasoning-09": 2,
+      "v2-reasoning-10": 2,
+      "v2-reasoning-11": 2,
+      "v2-reasoning-12": 2,
+      "v2-reasoning-13": 2,
+      "v2-reasoning-14": 2,
+      "v2-reasoning-15": 2,
+      "v2-reasoning-16": 2,
+      "v2-reasoning-17": 2,
+      "v2-reasoning-18": 2,
+      "v2-reasoning-19": 2,
+      "v2-reasoning-20": 2,
+      "v2-reasoning-21": 2,
+      "v2-reasoning-22": 2,
+      "v2-reasoning-23": 2,
+      "v2-reasoning-24": 2,
+      "v2-coding-01": 2,
+      "v2-coding-02": 2,
+      "v2-coding-03": 2,
+      "v2-coding-04": 2,
+      "v2-coding-05": 2,
+      "v2-coding-06": 2,
+      "v2-coding-07": 2,
+      "v2-coding-08": 2,
+      "v2-coding-09": 2,
+      "v2-coding-10": 2,
+      "v2-coding-11": 2,
+      "v2-coding-12": 2,
+      "v2-coding-13": 2,
+      "v2-coding-14": 2,
+      "v2-coding-15": 2,
+      "v2-coding-16": 2,
+      "v2-coding-17": 2,
+      "v2-coding-18": 2,
+      "v2-analysis-01": 2,
+      "v2-analysis-02": 2,
+      "v2-analysis-03": 2,
+      "v2-analysis-04": 2,
+      "v2-analysis-05": 2,
+      "v2-analysis-06": 2,
+      "v2-analysis-07": 2,
+      "v2-analysis-08": 2,
+      "v2-analysis-09": 2,
+      "v2-analysis-10": 2,
+      "v2-analysis-11": 2,
+      "v2-analysis-12": 2,
+      "v2-agent-01": 2,
+      "v2-agent-02": 2,
+      "v2-agent-03": 2,
+      "v2-agent-04": 2,
+      "v2-agent-05": 2,
+      "v2-agent-06": 2
+    },
+    "byRequestedModelLabel": {
+      "codex/gpt-5.5": 60,
+      "frogp/mix": 60
+    },
+    "byRoutedModelLabel": {
+      "gpt-5.5": 92,
+      "claude-opus-4-8": 23,
+      "gpt-5.4-mini": 5
+    },
+    "byProvider": {
+      "codex": 97,
+      "anthropic": 23
+    },
+    "byRouteKind": {
+      "qualified": 120
+    }
+  },
+  "sameModelSubset": {
+    "baselineModelLabel": "gpt-5.5",
+    "rows": [
+      {
+        "taskId": "v2-reasoning-23",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-01",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-02",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-03",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-04",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-05",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-06",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-07",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-08",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-09",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-10",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-11",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-12",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-13",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-14",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-15",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-16",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-17",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-coding-18",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-01",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-02",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-03",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-04",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-05",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-06",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-07",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-08",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-09",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-10",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-11",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-analysis-12",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      },
+      {
+        "taskId": "v2-agent-06",
+        "profile": "r1-dispatch-mixed",
+        "routedModelLabel": "gpt-5.5"
+      }
+    ]
+  },
+  "diagnostics": [],
+  "search": {
+    "searchCalls": 0,
+    "searchCallsSource": "serve-log"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "f0-strong-synth",
+  "description": "F0 fusion profile with the same four-member panel and explicit claude-opus-4-8 judge/synthesizer for Option C signal; buffered stage timeout is 45s.",
+  "targetModel": "frogp/mix",
+  "modelMixing": {
+    "enabled": true,
+    "aliasId": "frogp/mix",
+    "mode": "coordinator",
+    "combine": "fusion",
+    "agents": [
+      {
+        "provider": "codex",
+        "model": "gpt-5.5"
+      },
+      {
+        "provider": "codex",
+        "model": "gpt-5.4"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-6"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-4-8"
+      }
+    ],
+    "coordinator": {
+      "provider": "anthropic",
+      "model": "claude-opus-4-8"
+    },
+    "fusion": {
+      "panel": [
+        {
+          "provider": "codex",
+          "model": "gpt-5.5"
+        },
+        {
+          "provider": "codex",
+          "model": "gpt-5.4"
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-6"
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-4-8"
+        }
+      ],
+      "judge": {
+        "provider": "anthropic",
+        "model": "claude-opus-4-8"
+      },
+      "synthesizer": {
+        "provider": "anthropic",
+        "model": "claude-opus-4-8"
+      }
+    },
+    "stageTimeoutMs": 45000,
+    "panelTimeoutMs": 45000,
+    "surfaceStages": true
+  }
+}

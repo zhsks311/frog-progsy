@@ -1,0 +1,16 @@
+.git
+.gjc
+node_modules
+gui/node_modules
+docs-site/node_modules
+artifacts
+*.log
+.DS_Store
+.env
+.env.*
+dist
+gui/dist
+docs-site/.next
+docs-site/dist
+docs-site/out
+docs-site/.astro

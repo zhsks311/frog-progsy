@@ -1,0 +1,35 @@
+{
+  "name": "f0s-codex",
+  "description": "F0S (Option C strong judge/synth) variant with a codex-only panel for periods when the anthropic lane is down. Longer buffered stage timeouts and explicit strong judge/synthesizer, no product code changes.",
+  "targetModel": "frogp/mix",
+  "modelMixing": {
+    "enabled": true,
+    "combine": "fusion",
+    "agents": [
+      {
+        "provider": "codex",
+        "model": "gpt-5.5"
+      },
+      {
+        "provider": "codex",
+        "model": "gpt-5.4"
+      },
+      {
+        "provider": "codex",
+        "model": "gpt-5.4-mini"
+      }
+    ],
+    "fusion": {
+      "judge": {
+        "provider": "codex",
+        "model": "gpt-5.5"
+      },
+      "synthesizer": {
+        "provider": "codex",
+        "model": "gpt-5.5"
+      }
+    },
+    "stageTimeoutMs": 60000,
+    "panelTimeoutMs": 60000
+  }
+}
