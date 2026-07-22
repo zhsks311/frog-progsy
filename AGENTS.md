@@ -19,6 +19,7 @@ Non-negotiable highlights (full detail in `CLAUDE.md`):
 ## Where things live
 
 - Maintainer source of truth: `structure/*.md` (e.g. `structure/07_classifier-routing.md` for classifier routing).
+- Release strategy source of truth: [`structure/06_docs-and-release.md`](structure/06_docs-and-release.md); `.github/workflows/release.yml` is its executable enforcement layer.
 - Public documentation: `docs-site/` plus the root localized READMEs.
 - Local investigations and generated evidence: `docs/` and `artifacts/` — gitignored and never committed.
 - Runtime state / workflow artifacts: `.gjc/` — gitignored, runtime-owned. Never hand-edit; use the `gjc` CLI. Durable specifications and maintainer decisions belong in `structure/`.
@@ -37,8 +38,9 @@ Non-negotiable highlights (full detail in `CLAUDE.md`):
 - Dev-package `uninstall` removes only the Bun global package/link and must preserve `~/.frogprogsy`,
   Claude homes, Keychain entries, grants, and credentials. Do not substitute the destructive product-level
   `frogp uninstall`.
-- npm is permitted only in the real-publish GitHub Actions lane to bootstrap the OIDC-capable npm CLI and
-  upload the exact Bun-built tarball through Trusted Publishing. The maintained contract is
+- npm is permitted only in the real-publish GitHub Actions lane. Normal releases use OIDC Trusted
+  Publishing for the exact Bun-built tarball; only the explicit first-package bootstrap may use its
+  short-lived scoped secret. The maintained contract is
   [`structure/06_docs-and-release.md`](structure/06_docs-and-release.md).
 - Do not reintroduce retired product or worktree names into active source, scripts, tests, or user docs.
 

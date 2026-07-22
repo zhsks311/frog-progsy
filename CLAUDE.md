@@ -40,7 +40,10 @@
 - 개발 패키지 명령은 `bun run dev:package`를 사용한다. 주요 흐름은 `build`, `install --yes`, `reinstall --yes`, `status`, `uninstall --yes`다.
 - 개발 빌드는 Git common directory 아래에 불변 tarball과 SHA-256 manifest로 기록되어 모든 연결 worktree가 공유한다. 설치본이 최신인지 추측하지 말고 `bun run dev:package status`로 `current`/`outdated` 상태와 build id를 확인한다.
 - 개발 패키지의 `uninstall`은 Bun 전역 패키지/링크만 제거해야 한다. `~/.frogprogsy`, Claude 홈, Keychain, grant, 자격증명을 읽거나 삭제하지 않으며, 제품 수준의 `frogp uninstall`로 대체하지 않는다.
-- npm CLI의 유일한 예외는 실제 배포 GitHub Actions lane이다. OIDC 가능한 npm CLI를 준비한 뒤 Bun이 만든 정확한 tarball을 Trusted Publishing으로 업로드하는 데만 사용한다. 유지보수 기준은 `structure/06_docs-and-release.md`.
+- npm CLI는 실제 배포 GitHub Actions lane에서만 허용한다. 일반 배포는 OIDC Trusted Publishing으로 Bun이 만든 정확한 tarball을 업로드한다. 최초 package bootstrap만 명시적 1회 입력과 단기 secret을 허용하며, 성공 즉시 credential과 secret을 제거한다. 유지보수 기준은 `structure/06_docs-and-release.md`.
+- 배포 전략의 단일 원본은 `structure/06_docs-and-release.md`, 실행 강제 장치는 `.github/workflows/release.yml`이다. README와 이 파일에 전체 절차를 중복하지 않는다.
+- 정식 배포 전 해당 **정확한 release SHA**의 Cross-platform CI와 Package lifecycle 성공, release dry-run, Bun tarball 해시 검증을 모두 요구한다.
+- `preview`는 prerelease SemVer, `latest`는 stable SemVer에만 사용한다. 공개된 버전·tarball·`v<version>` 태그는 재사용하거나 강제로 이동하지 않고 다음 버전으로 수정 배포한다.
 - 폐기한 이전 제품명과 worktree 이름을 활성 소스·스크립트·테스트·사용자 문서에 다시 넣지 않는다.
 
 ## 자주 하던 실수 (반복 금지)

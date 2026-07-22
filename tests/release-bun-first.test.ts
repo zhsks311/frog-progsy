@@ -16,6 +16,35 @@ describe("Bun-first release and installation contract", () => {
     expect(source).toContain("bun add -g frogprogsy");
   });
 
+  test("release helper waits fail-closed on BOTH workflow gates for the exact SHA before dispatching", async () => {
+    const source = await read("scripts/release.ts");
+
+    // Both gate workflows are named as constants and registered for waiting — matching
+    // release.yml's `require_success ci.yml` + `require_success package-lifecycle.yml`.
+    expect(source).toContain('const CI_WORKFLOW = "ci.yml"');
+    expect(source).toContain('const PACKAGE_LIFECYCLE_WORKFLOW = "package-lifecycle.yml"');
+    expect(source).toContain("{ workflow: CI_WORKFLOW, label: \"Cross-platform CI\" }");
+    expect(source).toContain("{ workflow: PACKAGE_LIFECYCLE_WORKFLOW, label: \"Package lifecycle\" }");
+
+    // The run lookup is pinned to the exact commit SHA.
+    expect(source).toContain("gh run list --workflow ${workflow} --commit ${sha}");
+
+    // A completed non-success run aborts immediately and names the failed workflow.
+    expect(source).toContain("${gate.label} (${gate.workflow}) failed for ${sha}");
+    // Missing/in-progress runs keep polling inside the bounded timeout (fail-closed on expiry).
+    expect(source).toContain("const deadline = Date.now() + RELEASE_GATE_WAIT_TIMEOUT_MS");
+    expect(source).toContain("timed out waiting for ${gate.label}");
+
+    // The dual gate is awaited BEFORE the Release workflow is dispatched, and the old
+    // single-CI-only wait is gone.
+    expect(source).toContain("await waitForReleaseGates(releaseSha)");
+    expect(source).not.toContain("waitForSuccessfulCi");
+    const gateIndex = source.indexOf("await waitForReleaseGates(releaseSha)");
+    const dispatchIndex = source.indexOf("gh workflow run release.yml");
+    expect(gateIndex).toBeGreaterThan(-1);
+    expect(dispatchIndex).toBeGreaterThan(gateIndex);
+  });
+
   test("release workflow confines npm to the final trusted-publish lane", async () => {
     const workflow = await read(".github/workflows/release.yml");
     expect(workflow).toContain("bun install");
@@ -38,6 +67,37 @@ describe("Bun-first release and installation contract", () => {
     expect(workflow).not.toContain("actions/setup-node@v");
     expect(workflow).toContain("npm install -g npm@11.5.1");
     expect(workflow).not.toContain("npm install -g npm@latest");
+  });
+
+  test("release policy enforces channels, one-time bootstrap, and canonical provenance metadata", async () => {
+    const helper = await read("scripts/release.ts");
+    const workflow = await read(".github/workflows/release.yml");
+    const pkg = JSON.parse(await read("package.json")) as { repository?: { url?: string } };
+
+    expect(helper).toContain('tag !== "latest" && tag !== "preview"');
+    expect(helper).toContain('(tag === "preview") !== prerelease');
+    expect(helper).toContain("-f bootstrap=${String(bootstrap)}");
+    expect(helper).toContain("-f expected-sha=${releaseSha}");
+    expect(workflow).toContain("Workflow checkout SHA ${GITHUB_SHA} != expected release SHA ${EXPECTED_SHA}");
+    expect(workflow).toContain("latest requires a stable SemVer");
+    expect(workflow).toContain("preview requires a prerelease SemVer");
+    expect(workflow).toContain("bootstrap is one-time only");
+    expect(helper).toContain("--bootstrap must publish a stable version to the latest channel");
+    expect(workflow).toContain("bootstrap must create the default latest channel");
+    expect(workflow).not.toContain('|*"not found"*)');
+    expect(workflow).toContain("Unable to determine whether ${pkg_name}@${RELEASE_VERSION} exists");
+    expect(workflow).toContain("Unable to determine whether GitHub Release ${release_tag} exists");
+    expect(helper).not.toContain('output.includes("release not found") ||');
+    expect(workflow).toContain("secrets.NPM_BOOTSTRAP_TOKEN");
+    expect(workflow).toContain('if [ "$BOOTSTRAP" = "true" ] && [ -z "$NODE_AUTH_TOKEN" ]');
+    const buildIndex = workflow.indexOf("bun scripts/dev-package.ts build --skip-gates");
+    const secretIndex = workflow.indexOf("NODE_AUTH_TOKEN:");
+    expect(workflow).toContain("NODE_AUTH_TOKEN: ${{ inputs.bootstrap && secrets.NPM_BOOTSTRAP_TOKEN || '' }}");
+    expect(workflow.split("NODE_AUTH_TOKEN:").length - 1).toBe(1);
+    expect(buildIndex).toBeGreaterThan(-1);
+    expect(secretIndex).toBeGreaterThan(buildIndex);
+    expect(workflow).toContain("Keep the bootstrap credential out of install, build, lifecycle, and dry-run steps");
+    expect(pkg.repository?.url).toBe("git+https://github.com/zhsks311/Frogprogsy.git");
   });
 
   test("package lifecycle workflow builds the shared tarball once and installs it across three OSes", async () => {

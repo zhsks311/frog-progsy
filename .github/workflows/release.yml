@@ -11,6 +11,10 @@ on:
         description: "Version to publish — must equal package.json (e.g. 0.1.0)"
         required: true
         type: string
+      expected-sha:
+        description: "Exact 40-character main commit SHA to release"
+        required: true
+        type: string
       tag:
         description: "Registry dist-tag"
         required: true
@@ -24,6 +28,11 @@ on:
         required: false
         type: boolean
         default: true
+      bootstrap:
+        description: "One-time first package publish with NPM_BOOTSTRAP_TOKEN (real publish only)"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write # create the matching GitHub Release + version tag after npm publish
@@ -66,20 +75,57 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Verify version matches package.json
+      - name: Verify version, channel, and package metadata
         env:
           RELEASE_VERSION: ${{ inputs.version }}
+          REGISTRY_DIST_TAG: ${{ inputs.tag }}
+          EXPECTED_SHA: ${{ inputs.expected-sha }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[[:alnum:]_.]+)?$ ]] || {
             echo "::error::Invalid release version: $RELEASE_VERSION"
             exit 1
           }
+
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::expected-sha must be a lowercase 40-character commit SHA"
+            exit 1
+          }
+          test "$GITHUB_SHA" = "$EXPECTED_SHA" || {
+            echo "::error::Workflow checkout SHA ${GITHUB_SHA} != expected release SHA ${EXPECTED_SHA}"
+            exit 1
+          }
+
+          case "$REGISTRY_DIST_TAG" in
+            latest)
+              [[ "$RELEASE_VERSION" != *-* ]] || {
+                echo "::error::latest requires a stable SemVer; got ${RELEASE_VERSION}"
+                exit 1
+              }
+              ;;
+            preview)
+              [[ "$RELEASE_VERSION" == *-* ]] || {
+                echo "::error::preview requires a prerelease SemVer; got ${RELEASE_VERSION}"
+                exit 1
+              }
+              ;;
+            *)
+              echo "::error::Unsupported registry dist-tag: ${REGISTRY_DIST_TAG}"
+              exit 1
+              ;;
+          esac
+
           PKG=$(bun -e 'console.log((await Bun.file("package.json").json()).version)')
           echo "package.json=$PKG  input=$RELEASE_VERSION"
           test "$PKG" = "$RELEASE_VERSION" || {
-            echo "::error::package.json ($PKG) != requested ($RELEASE_VERSION) — bump package.json on main first";
-            exit 1;
+            echo "::error::package.json ($PKG) != requested ($RELEASE_VERSION) — bump package.json on main first"
+            exit 1
+          }
+
+          REPOSITORY=$(bun -e 'console.log((await Bun.file("package.json").json()).repository?.url ?? "")')
+          test "$REPOSITORY" = "git+https://github.com/zhsks311/Frogprogsy.git" || {
+            echo "::error::package.json repository.url must exactly identify zhsks311/Frogprogsy for npm provenance"
+            exit 1
           }
 
       - name: Require successful CI and package-lifecycle runs for this commit
@@ -118,23 +164,82 @@ jobs:
           require_success ci.yml
           require_success package-lifecycle.yml
 
-      # Tokenless publish via Trusted Publishing (OIDC) — NO NPM_TOKEN secret. npm auto-detects the
-      # OIDC environment (`id-token: write` above) and generates provenance automatically, so neither a
-      # credential nor `--provenance` is needed. npm is confined to the real-publish lane; Bun owns
-      # dependency installation, validation, packaging, and dry-run publishing.
-      # PREREQUISITE: configure the Trusted Publisher for this repo + workflow on npmjs.com — possible
-      # only AFTER the package's first version exists (do the first publish locally, see the runbook).
+      # Normal real publishes are tokenless Trusted Publishing (OIDC): npm auto-detects the
+      # OIDC environment (`id-token: write` above) and generates provenance automatically.
+      # The explicit one-time bootstrap input is the only credential fallback. It is accepted
+      # only while the package does not yet exist and requires the scoped NPM_BOOTSTRAP_TOKEN
+      # Actions secret. Delete that secret immediately after bootstrap and configure the npm
+      # Trusted Publisher for zhsks311/Frogprogsy + release.yml.
       - name: Preflight release metadata
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ inputs.version }}
           DRY_RUN: ${{ inputs.dry-run }}
+          BOOTSTRAP: ${{ inputs.bootstrap }}
+          REGISTRY_DIST_TAG: ${{ inputs.tag }}
         run: |
           set -euo pipefail
 
           pkg_name="$(bun -e 'console.log((await Bun.file("package.json").json()).name)')"
           release_tag="v${RELEASE_VERSION}"
           dry_run="${DRY_RUN}"
+          bootstrap="${BOOTSTRAP}"
+
+          package_probe_file="$(mktemp)"
+          if bun pm view "$pkg_name" name >"$package_probe_file" 2>&1; then
+            package_exists=true
+          else
+            package_probe="$(<"$package_probe_file")"
+            case "$package_probe" in
+              *"E404"*|*"404 Not Found"*|*"does not exist in this registry"*|*"No match found"*)
+                package_exists=false
+                ;;
+              *)
+                echo "::error::Unable to determine whether ${pkg_name} exists in the registry"
+                sed 's/^/registry: /' "$package_probe_file"
+                exit 1
+                ;;
+            esac
+          fi
+          rm -f "$package_probe_file"
+
+          version_exists=false
+          if [ "$package_exists" = "true" ]; then
+            version_probe_file="$(mktemp)"
+            if bun pm view "${pkg_name}@${RELEASE_VERSION}" version >"$version_probe_file" 2>&1; then
+              version_exists=true
+            else
+              version_probe="$(<"$version_probe_file")"
+              case "$version_probe" in
+                *"E404"*|*"404 Not Found"*|*"does not exist in this registry"*|*"No match found"*)
+                  version_exists=false
+                  ;;
+                *)
+                  echo "::error::Unable to determine whether ${pkg_name}@${RELEASE_VERSION} exists"
+                  sed 's/^/registry: /' "$version_probe_file"
+                  exit 1
+                  ;;
+              esac
+            fi
+            rm -f "$version_probe_file"
+          fi
+
+          if [ "$bootstrap" = "true" ] && [ "$dry_run" = "true" ]; then
+            echo "::error::bootstrap is valid only for a real publish"
+            exit 1
+          fi
+          if [ "$bootstrap" = "true" ] && [ "$REGISTRY_DIST_TAG" != "latest" ]; then
+            echo "::error::bootstrap must create the default latest channel"
+            exit 1
+          fi
+          if [ "$dry_run" != "true" ] && [ "$package_exists" = "false" ] && [ "$bootstrap" != "true" ]; then
+            echo "::error::${pkg_name} does not exist yet; the first real publish requires bootstrap=true"
+            exit 1
+          fi
+          if [ "$package_exists" = "true" ] && [ "$bootstrap" = "true" ]; then
+            echo "::error::bootstrap is one-time only and is forbidden after ${pkg_name} exists"
+            exit 1
+          fi
 
           git fetch --force --tags origin
 
@@ -153,7 +258,25 @@ jobs:
             fi
           fi
 
-          if gh release view "$release_tag" >/dev/null 2>&1; then
+          release_probe_file="$(mktemp)"
+          if gh release view "$release_tag" --json tagName >"$release_probe_file" 2>&1; then
+            release_exists=true
+          else
+            release_probe="$(<"$release_probe_file")"
+            case "$release_probe" in
+              *"release not found"*)
+                release_exists=false
+                ;;
+              *)
+                echo "::error::Unable to determine whether GitHub Release ${release_tag} exists"
+                sed 's/^/github: /' "$release_probe_file"
+                exit 1
+                ;;
+            esac
+          fi
+          rm -f "$release_probe_file"
+
+          if [ "$release_exists" = "true" ]; then
             if [ "$dry_run" = "true" ]; then
               echo "::notice::GitHub Release ${release_tag} already exists; dry-run only"
             else
@@ -162,7 +285,7 @@ jobs:
             fi
           fi
 
-          if bun pm view "${pkg_name}@${RELEASE_VERSION}" version >/dev/null 2>&1; then
+          if [ "$version_exists" = "true" ]; then
             if [ "$dry_run" = "true" ]; then
               echo "::notice::${pkg_name}@${RELEASE_VERSION} already exists in the registry; dry-run only"
             else
@@ -171,23 +294,37 @@ jobs:
             fi
           fi
 
-      - name: Publish (or dry-run)
+      - name: Build and validate exact tarball
         env:
           DRY_RUN: ${{ inputs.dry-run }}
-          REGISTRY_DIST_TAG: ${{ inputs.tag }}
         run: |
           set -euo pipefail
           bun run prepublishOnly
           bun scripts/dev-package.ts build --skip-gates
           TARBALL="$(bun scripts/dev-package.ts path)"
           echo "verified tarball=${TARBALL}"
+          echo "TARBALL=${TARBALL}" >> "$GITHUB_ENV"
 
           if [ "$DRY_RUN" = "true" ]; then
             echo "::notice::DRY RUN — validating the exact Bun-built tarball, not publishing"
             bun publish --dry-run "$TARBALL"
-          else
-            npm publish "$TARBALL" --tag "$REGISTRY_DIST_TAG" --access public
           fi
+
+      # Keep the bootstrap credential out of install, build, lifecycle, and dry-run steps.
+      # It is exposed only to the final npm process in the explicit one-time bootstrap mode.
+      - name: Publish exact tarball
+        if: ${{ inputs.dry-run != true }}
+        env:
+          REGISTRY_DIST_TAG: ${{ inputs.tag }}
+          BOOTSTRAP: ${{ inputs.bootstrap }}
+          NODE_AUTH_TOKEN: ${{ inputs.bootstrap && secrets.NPM_BOOTSTRAP_TOKEN || '' }}
+        run: |
+          set -euo pipefail
+          if [ "$BOOTSTRAP" = "true" ] && [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::bootstrap requires the scoped NPM_BOOTSTRAP_TOKEN Actions secret"
+            exit 1
+          fi
+          npm publish "$TARBALL" --tag "$REGISTRY_DIST_TAG" --access public
 
       # Confirm the registry actually has the new version (real publishes only).
       - name: Post-publish registry smoke
@@ -195,18 +332,20 @@ jobs:
         env:
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
+          set -euo pipefail
+          pkg_name="$(bun -e 'console.log((await Bun.file("package.json").json()).name)')"
           for attempt in $(seq 1 30); do
-            if VERSION=$(bun pm view "frogprogsy@${RELEASE_VERSION}" version 2>/dev/null); then
+            if VERSION=$(bun pm view "${pkg_name}@${RELEASE_VERSION}" version 2>/dev/null); then
               echo "registry version=$VERSION"
               test "$VERSION" = "$RELEASE_VERSION"
-              bun pm view frogprogsy dist-tags
+              bun pm view "$pkg_name" dist-tags
               exit 0
             fi
-            echo "::notice::frogprogsy@${RELEASE_VERSION} not visible in the registry yet (attempt $attempt/30)"
+            echo "::notice::${pkg_name}@${RELEASE_VERSION} not visible in the registry yet (attempt $attempt/30)"
             sleep 10
           done
           echo "::error::package registry smoke failed after 30 attempts"
-          bun pm view frogprogsy versions dist-tags || true
+          bun pm view "$pkg_name" versions dist-tags || true
           exit 1
 
       - name: Create GitHub release

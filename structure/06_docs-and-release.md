@@ -96,6 +96,73 @@ The development script manages only Bun's global package/link state. It never in
 uninstall command and never removes frogprogsy config, Claude homes, Keychain entries, grants, or other
 credentials. Public registry publishing is a separate release concern.
 
+## Release strategy
+
+This file is the single maintainer source of truth for release policy. `CLAUDE.md` and `AGENTS.md`
+carry only the non-negotiable summary, `.github/workflows/release.yml` is the executable enforcement
+layer, and the localized READMEs contain only consumer installation and update instructions. Do not
+duplicate the full strategy across those surfaces.
+
+### Version and channel policy
+
+frogprogsy uses SemVer release versions and two registry channels:
+
+| Channel | Version form | Purpose |
+| --- | --- | --- |
+| `preview` | prerelease version such as `0.2.0-preview.1` | Validate a candidate without moving the stable install channel. |
+| `latest` | stable version such as `0.2.0` | Supported public release installed by default. |
+
+A published preview is immutable and is not republished as stable. After preview validation, publish
+the corresponding stable version as a new release. Every changed package version is consumed even if
+a later metadata step fails; recovery uses a new patch or prerelease number.
+
+### Release sequence
+
+1. Land the release contents on `main` through the normal branch/worktree path.
+2. Choose an unused version and update `package.json` in a dedicated release commit.
+3. Require successful Cross-platform CI and Package lifecycle runs for that exact commit SHA.
+4. Run the release workflow as a dry-run for that SHA and verify the exact Bun-built tarball.
+5. Dispatch a real publish for the same SHA with `preview` for a prerelease version or `latest` for a
+   stable version. If `main` moved after the dry-run, repeat the dry-run on the new release SHA.
+6. Require the registry smoke, immutable `v<version>` tag, and matching GitHub Release to succeed.
+7. Verify the published version and dist-tags with `bun pm view`; retain the workflow URL as the
+   release receipt.
+
+`scripts/release.ts` automates the version commit, push, exact-SHA gate wait, workflow dispatch, and
+watch steps. Direct local registry publishing is not a supported shortcut.
+Manual dispatch must set `expected-sha` to the full 40-character release commit. The workflow compares
+it with `GITHUB_SHA` before any registry work; `scripts/release.ts` supplies it automatically.
+
+### First-package bootstrap
+
+Trusted Publisher configuration is attached to an existing npm package, so the first package version
+is a separate, one-time bootstrap. It must still run in the real-publish GitHub Actions lane using a
+short-lived npm credential; local `npm publish` is not permitted.
+
+1. Create a granular npm token with the shortest available expiry, read/write access to **All
+   Packages** (the package does not exist yet), and 2FA bypass only for this CI publish. Store it as
+   the `NPM_BOOTSTRAP_TOKEN` GitHub Actions secret.
+2. Run `bun run release <version> --publish --bootstrap`. Bootstrap is stable/`latest` only; the helper
+   and workflow still require the exact-SHA CI gates and exact Bun-built tarball.
+3. On npmjs.com, configure the package Trusted Publisher with owner `zhsks311`, repository
+   `Frogprogsy`, workflow filename `release.yml`, and the `npm publish` action.
+4. Revoke the granular token on npmjs.com, delete the `NPM_BOOTSTRAP_TOKEN` Actions secret, verify a
+   normal OIDC release, and configure npm publishing access to disallow token publishing.
+
+After the first normal OIDC release, confirm that npm shows provenance for the published tarball before
+treating the Trusted Publisher migration as complete.
+
+The workflow rejects bootstrap during dry-runs, after the package exists, or when the scoped secret is
+missing. Normal releases receive no registry token and must fail closed rather than fall back from OIDC.
+
+### Recovery policy
+
+Do not unpublish, overwrite tarballs, force-move public tags, or reuse a consumed version. For a bad
+stable release, fix forward with the next patch and publish it to `latest`. For a bad preview, publish
+the next prerelease number. Metadata disagreement between the registry, Git tag, and GitHub Release
+blocks automation until maintainers either repair the missing metadata at the same immutable commit
+or choose a new version. The normal release workflow does not perform ad-hoc dist-tag rollback.
+
 ## Release workflow
 
 Package development and release preparation are Bun-first. `package.json` defines the `frogprogsy` package
@@ -104,9 +171,11 @@ Bun for registry preflight, version updates, and release orchestration. The work
 allowlisted, hash-recorded tarball through `scripts/dev-package.ts`. Each workflow run verifies the exact
 tarball it produced: dry-run validates it with Bun, while a real run passes that same run's verified path
 to the final `npm publish`. npm is otherwise confined to the real-publish lane, where it first updates
-itself to the OIDC-capable version and then performs Trusted Publishing. This exception remains because
-tokenless OIDC authentication and provenance are not currently documented for `bun publish`. Docs
-publishing is separate from package registry publishing.
+itself to the OIDC-capable version and then performs Trusted Publishing. The one-time bootstrap uses
+the same lane and exact tarball with an explicitly selected short-lived secret; no normal release
+receives that credential. This exception remains because tokenless OIDC authentication and provenance
+are not currently documented for `bun publish`. Docs publishing is separate from package registry
+publishing.
 
 ## Release metadata invariants
 

@@ -54,11 +54,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/zhsks311/frog-progsy.git"
+    "url": "git+https://github.com/zhsks311/Frogprogsy.git"
   },
   "homepage": "https://zhsks311.github.io/frog-progsy/",
   "bugs": {
-    "url": "https://github.com/zhsks311/frog-progsy/issues"
+    "url": "https://github.com/zhsks311/Frogprogsy/issues"
   },
   "license": "MIT"
 }
